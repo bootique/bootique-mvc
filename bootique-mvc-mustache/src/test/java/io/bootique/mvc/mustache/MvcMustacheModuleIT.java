@@ -19,50 +19,48 @@
 
 package io.bootique.mvc.mustache;
 
+import io.bootique.BQRuntime;
+import io.bootique.Bootique;
 import io.bootique.jersey.JerseyModule;
+import io.bootique.jetty.junit5.JettyTester;
+import io.bootique.junit5.BQApp;
+import io.bootique.junit5.BQTest;
+import io.bootique.junit5.BQTestTool;
 import io.bootique.mvc.mustache.view.ConcreteView;
-import io.bootique.test.junit.BQTestFactory;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@BQTest
 public class MvcMustacheModuleIT {
 
-    @ClassRule
-    public static BQTestFactory TEST_SERVER = new BQTestFactory();
+    @BQTestTool
+    static final JettyTester jetty = JettyTester.create();
 
-    @BeforeClass
-    public static void beforeClass() {
-        TEST_SERVER.app()
-                .args("--config=classpath:MvcMustacheModuleIT.yml", "-s")
-                .autoLoadModules()
-                .module(binder -> JerseyModule.extend(binder).addResource(Api.class))
-                .run();
-    }
+    @BQApp
+    public static BQRuntime app = Bootique.app("--config=classpath:MvcMustacheModuleIT.yml", "-s")
+            .autoLoadModules()
+            .module(binder -> JerseyModule.extend(binder).addResource(Api.class))
+            .module(jetty.moduleReplacingConnectors())
+            .createRuntime();
 
     @Test
     public void testV1() {
-        WebTarget base = ClientBuilder.newClient().target("http://localhost:8080");
-        Response r1 = base.path("/v1").request().get();
+        Response r1 = jetty.getTarget().path("/v1").request().get();
         assertEquals(Status.OK.getStatusCode(), r1.getStatus());
         assertEquals("\nv1_string_p1_number_564", r1.readEntity(String.class));
     }
 
     @Test
     public void testV2() {
-        WebTarget base = ClientBuilder.newClient().target("http://localhost:8080");
-        Response r1 = base.path("/v2").request().get();
+        Response r1 = jetty.getTarget().path("/v2").request().get();
         assertEquals(Status.OK.getStatusCode(), r1.getStatus());
         assertEquals("\nv2_string_p2_number_5649", r1.readEntity(String.class));
     }

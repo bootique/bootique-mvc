@@ -19,88 +19,82 @@
 
 package io.bootique.mvc.freemarker;
 
+import io.bootique.BQRuntime;
+import io.bootique.Bootique;
 import io.bootique.jersey.JerseyModule;
-import io.bootique.mvc.freemarker.views.hierarchy.PageView;
+import io.bootique.jetty.junit5.JettyTester;
+import io.bootique.junit5.BQApp;
+import io.bootique.junit5.BQTest;
+import io.bootique.junit5.BQTestTool;
 import io.bootique.mvc.freemarker.views.HelloWorldView;
-import io.bootique.test.junit.BQTestFactory;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Test;
+import io.bootique.mvc.freemarker.views.hierarchy.PageView;
+import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * @author Lukasz Bachman
- */
+@BQTest
 public class MvcFreemarkerModuleIT {
 
-	@ClassRule
-	public static BQTestFactory TEST_SERVER = new BQTestFactory();
+    @BQTestTool
+    static final JettyTester jetty = JettyTester.create();
 
-	@BeforeClass
-	public static void beforeClass() {
-		TEST_SERVER.app()
-				.args("--config=classpath:MvcFreemarkerModuleIT.yml", "-s")
-				.autoLoadModules()
-				.module(binder -> JerseyModule.extend(binder).addResource(Api.class))
-				.run();
-	}
+    @BQApp
+    static final BQRuntime app = Bootique.app("--config=classpath:MvcFreemarkerModuleIT.yml", "-s")
+            .autoLoadModules()
+            .module(binder -> JerseyModule.extend(binder).addResource(Api.class))
+            .module(jetty.moduleReplacingConnectors())
+            .createRuntime();
 
-	@Test
-	public void shouldRenderSimpleHelloMessage() {
-		WebTarget base = ClientBuilder.newClient().target("http://localhost:8080");
-		Response r1 = base.path("/hello").request().get();
-		assertEquals(Status.OK.getStatusCode(), r1.getStatus());
-		assertEquals("Hello John Doe!", r1.readEntity(String.class));
-	}
+    @Test
+    public void shouldRenderSimpleHelloMessage() {
+        Response r1 = jetty.getTarget().path("/hello").request().get();
+        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
+        assertEquals("Hello John Doe!", r1.readEntity(String.class));
+    }
 
-	@Test
-	public void shouldRenderPageThatUsesHierarchicalLayoutWithAllSectionsPopulated() {
-		WebTarget base = ClientBuilder.newClient().target("http://localhost:8080");
-		Response r1 = base.path("/hierarchy-all").request().get();
-		assertEquals(Status.OK.getStatusCode(), r1.getStatus());
-		assertEquals("This is custom header.This is custom content.This is custom footer.", r1.readEntity(String.class));
-	}
+    @Test
+    public void shouldRenderPageThatUsesHierarchicalLayoutWithAllSectionsPopulated() {
+        Response r1 = jetty.getTarget().path("/hierarchy-all").request().get();
+        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
+        assertEquals("This is custom header.This is custom content.This is custom footer.", r1.readEntity(String.class));
+    }
 
-	@Test
-	public void shouldRenderPageThatUsesHierarchicalLayoutWithJustSomeSectionsPopulated() {
-		WebTarget base = ClientBuilder.newClient().target("http://localhost:8080");
-		Response r1 = base.path("/hierarchy-some").request().get();
-		assertEquals(Status.OK.getStatusCode(), r1.getStatus());
-		assertEquals("Default header.This is custom content.", r1.readEntity(String.class));
-	}
+    @Test
+    public void shouldRenderPageThatUsesHierarchicalLayoutWithJustSomeSectionsPopulated() {
+        Response r1 = jetty.getTarget().path("/hierarchy-some").request().get();
+        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
+        assertEquals("Default header.This is custom content.", r1.readEntity(String.class));
+    }
 
-	@Path("/")
-	@Produces(MediaType.TEXT_PLAIN)
-	public static class Api {
+    @Path("/")
+    @Produces(MediaType.TEXT_PLAIN)
+    public static class Api {
 
-		@GET
-		@Path("/hello")
-		public HelloWorldView getV1() {
-			return new HelloWorldView("hello-world.ftl", "John", "Doe");
-		}
+        @GET
+        @Path("/hello")
+        public HelloWorldView getV1() {
+            return new HelloWorldView("hello-world.ftl", "John", "Doe");
+        }
 
-		@GET
-		@Path("/hierarchy-all")
-		public PageView getAllMacrosPage() {
-			return new PageView("all-macros.ftl", Collections.emptyMap());
-		}
+        @GET
+        @Path("/hierarchy-all")
+        public PageView getAllMacrosPage() {
+            return new PageView("all-macros.ftl", Collections.emptyMap());
+        }
 
-		@GET
-		@Path("/hierarchy-some")
-		public PageView getOneMacroPage() {
-			return new PageView("one-macro.ftl", Collections.emptyMap());
-		}
+        @GET
+        @Path("/hierarchy-some")
+        public PageView getOneMacroPage() {
+            return new PageView("one-macro.ftl", Collections.emptyMap());
+        }
 
-	}
+    }
 }

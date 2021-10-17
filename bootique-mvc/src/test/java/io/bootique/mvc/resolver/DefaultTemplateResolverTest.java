@@ -20,20 +20,20 @@
 package io.bootique.mvc.resolver;
 
 import io.bootique.resource.FolderResourceFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultTemplateResolverTest {
 
-    private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+    private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     @Test
     public void testResourcePath_EmptyBase() throws MalformedURLException {
@@ -62,7 +62,6 @@ public class DefaultTemplateResolverTest {
     public void testResourcePath_FilePathBase_Slash() throws IOException {
 
         DefaultTemplateResolver resolver = resolver("/tmp/");
-
         File canonical = new File("/tmp/io/bootique/mvc/resolver/tName.txt").getCanonicalFile();
 
         assertEquals(canonical.toURI().toURL(),

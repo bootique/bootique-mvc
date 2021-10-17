@@ -38,6 +38,23 @@
 			<artifactId>bootique-jersey</artifactId>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- Unit test dependencies -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.bootique</groupId>
+			<artifactId>bootique-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<!-- Optional profile used to sign artifacts -->
 	<profiles>
