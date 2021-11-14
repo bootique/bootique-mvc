@@ -21,6 +21,7 @@ package io.bootique.mvc.jakarta;
 
 import io.bootique.mvc.jakarta.renderer.TemplateRendererFactory;
 import io.bootique.mvc.jakarta.resolver.TemplateResolver;
+import jakarta.inject.Provider;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.container.ResourceInfo;
 import jakarta.ws.rs.core.Context;
@@ -28,7 +29,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.MessageBodyWriter;
 
-import javax.inject.Provider;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
