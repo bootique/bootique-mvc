@@ -1,6 +1,7 @@
 ## 3.0.M1
 
 * #21 JakartaEE-compatible version
+* #22 Upgrade to freemarket 2.3.31
 
 ## 2.0.M1
 
