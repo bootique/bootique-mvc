@@ -56,7 +56,7 @@ jobs:
         if: contains(env.POM_VERSION, '-SNAPSHOT')
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}-build-v1
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}-build-v3
           restore-keys: ${{ runner.os }}-maven
 
       - name: Deploy...
