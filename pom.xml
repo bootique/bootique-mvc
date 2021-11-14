@@ -40,6 +40,8 @@
         <module>bootique-mvc</module>
         <module>bootique-mvc-mustache</module>
         <module>bootique-mvc-freemarker</module>
+
+        <module>bootique-mvc-jakarta</module>
     </modules>
 
     <properties>
@@ -68,6 +70,11 @@
             <dependency>
                 <groupId>io.bootique.jersey</groupId>
                 <artifactId>bootique-jersey</artifactId>
+                <version>${bootique.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.bootique.jersey</groupId>
+                <artifactId>bootique-jersey3</artifactId>
                 <version>${bootique.version}</version>
             </dependency>
         </dependencies>

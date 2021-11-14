@@ -1,3 +1,7 @@
+## 3.0.M1
+
+* #21 JakartaEE-compatible version
+
 ## 2.0.M1
 
 * #20 Upgrade Mustache to 0.9.6
