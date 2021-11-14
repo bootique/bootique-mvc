@@ -1,7 +1,8 @@
 ## 3.0.M1
 
 * #21 JakartaEE-compatible version
-* #22 Upgrade to freemarket 2.3.31
+* #22 Upgrade to Freemarker 2.3.31
+* #23 Upgrade to Mustache 0.9.10
 
 ## 2.0.M1
 
