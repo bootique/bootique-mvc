@@ -21,7 +21,7 @@ package io.bootique.mvc.jakarta.mustache;
 
 import io.bootique.BQRuntime;
 import io.bootique.Bootique;
-import io.bootique.jersey.v3.JerseyModule;
+import io.bootique.jersey.jakarta.JerseyModule;
 import io.bootique.jetty.v11.junit5.JettyTester;
 import io.bootique.junit5.BQApp;
 import io.bootique.junit5.BQTest;

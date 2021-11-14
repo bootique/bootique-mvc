@@ -82,7 +82,7 @@
             </dependency>
             <dependency>
                 <groupId>io.bootique.jersey</groupId>
-                <artifactId>bootique-jersey3</artifactId>
+                <artifactId>bootique-jersey-jakarta</artifactId>
                 <version>${bootique.version}</version>
             </dependency>
         </dependencies>

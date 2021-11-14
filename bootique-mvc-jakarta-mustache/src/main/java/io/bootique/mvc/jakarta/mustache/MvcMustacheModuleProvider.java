@@ -22,7 +22,7 @@ package io.bootique.mvc.jakarta.mustache;
 import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
 import io.bootique.di.BQModule;
-import io.bootique.jersey.v3.JerseyModuleProvider;
+import io.bootique.jersey.jakarta.JerseyModuleProvider;
 import io.bootique.mvc.jakarta.MvcModuleProvider;
 
 import java.util.Collection;
