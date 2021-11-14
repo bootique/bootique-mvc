@@ -32,7 +32,7 @@
 	<description>Provides Freemarker integration as a template engine for Bootique MVC.</description>
 
 	<properties>
-		<freemarker.version>2.3.28</freemarker.version>
+
 	</properties>
 
 	<dependencyManagement>
