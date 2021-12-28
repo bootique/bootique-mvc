@@ -30,7 +30,7 @@
 
 	<groupId>io.bootique.mvc</groupId>
 	<artifactId>bootique-mvc-parent</artifactId>
-	<version>2.0.RC1-SNAPSHOT</version>
+	<version>2.0.RC1</version>
 	<packaging>pom</packaging>
 	<name>bootique-mvc-parent: </name>
 	<description>A parent of Bootoque MVC modules.</description>
@@ -49,7 +49,7 @@
     <scm>
         <developerConnection>scm:git:ssh://git@github.com/bootique/bootique-mvc</developerConnection>
         <url>https://github.com/bootique/bootique-mvc</url>
-        <tag>HEAD</tag>
+        <tag>2.0.RC1</tag>
     </scm>
 
 	<dependencyManagement>
