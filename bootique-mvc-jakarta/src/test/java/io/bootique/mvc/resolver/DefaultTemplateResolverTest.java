@@ -50,7 +50,7 @@ public class DefaultTemplateResolverTest {
 
         DefaultTemplateResolver resolver = resolver("/tmp");
 
-        File canonical = new File("/tmp/io/bootique/mvc/jakarta/resolver/tName.txt").getCanonicalFile();
+        File canonical = new File("/tmp/io/bootique/mvc/resolver/tName.txt").getCanonicalFile();
 
         assertEquals(canonical.toURI().toURL(),
                 resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
@@ -62,7 +62,7 @@ public class DefaultTemplateResolverTest {
     public void testResourcePath_FilePathBase_Slash() throws IOException {
 
         DefaultTemplateResolver resolver = resolver("/tmp/");
-        File canonical = new File("/tmp/io/bootique/mvc/jakarta/resolver/tName.txt").getCanonicalFile();
+        File canonical = new File("/tmp/io/bootique/mvc/resolver/tName.txt").getCanonicalFile();
 
         assertEquals(canonical.toURI().toURL(),
                 resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
@@ -75,9 +75,9 @@ public class DefaultTemplateResolverTest {
 
         DefaultTemplateResolver resolver = resolver("http://example.org/a");
 
-        assertEquals("http://example.org/a/io/bootique/mvc/jakarta/resolver/tName.txt",
+        assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
                 resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
-        assertEquals("http://example.org/a/io/bootique/mvc/jakarta/resolver/tName.txt",
+        assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
                 resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
     }
 
@@ -86,9 +86,9 @@ public class DefaultTemplateResolverTest {
 
         DefaultTemplateResolver resolver = resolver("http://example.org/a/");
 
-        assertEquals("http://example.org/a/io/bootique/mvc/jakarta/resolver/tName.txt",
+        assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
                 resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
-        assertEquals("http://example.org/a/io/bootique/mvc/jakarta/resolver/tName.txt",
+        assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
                 resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
     }
 
