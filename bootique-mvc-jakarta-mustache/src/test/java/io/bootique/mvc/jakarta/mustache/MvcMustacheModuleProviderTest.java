@@ -20,7 +20,7 @@
 package io.bootique.mvc.jakarta.mustache;
 
 import io.bootique.BQRuntime;
-import io.bootique.jersey.jakarta.JerseyModule;
+import io.bootique.jersey.JerseyModule;
 import io.bootique.junit5.*;
 import io.bootique.mvc.jakarta.MvcModule;
 import org.junit.jupiter.api.Test;

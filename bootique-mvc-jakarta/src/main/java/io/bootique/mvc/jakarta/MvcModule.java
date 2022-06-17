@@ -23,7 +23,7 @@ import io.bootique.ConfigModule;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
-import io.bootique.jersey.jakarta.JerseyModule;
+import io.bootique.jersey.JerseyModule;
 import io.bootique.mvc.jakarta.renderer.ByExtensionTemplateRendererFactory;
 import io.bootique.mvc.jakarta.renderer.TemplateRenderer;
 import io.bootique.mvc.jakarta.renderer.TemplateRendererFactory;
