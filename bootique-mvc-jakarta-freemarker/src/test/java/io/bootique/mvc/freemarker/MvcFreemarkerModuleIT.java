@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.freemarker;
+package io.bootique.mvc.freemarker;
 
 import io.bootique.BQRuntime;
 import io.bootique.Bootique;
@@ -26,8 +26,8 @@ import io.bootique.jetty.junit5.JettyTester;
 import io.bootique.junit5.BQApp;
 import io.bootique.junit5.BQTest;
 import io.bootique.junit5.BQTestTool;
-import io.bootique.mvc.jakarta.freemarker.views.HelloWorldView;
-import io.bootique.mvc.jakarta.freemarker.views.hierarchy.PageView;
+import io.bootique.mvc.freemarker.views.HelloWorldView;
+import io.bootique.mvc.freemarker.views.hierarchy.PageView;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;

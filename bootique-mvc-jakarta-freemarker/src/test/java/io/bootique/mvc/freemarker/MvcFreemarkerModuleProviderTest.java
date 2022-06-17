@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.freemarker;
+package io.bootique.mvc.freemarker;
 
 import io.bootique.junit5.BQModuleProviderChecker;
 import org.junit.jupiter.api.Test;

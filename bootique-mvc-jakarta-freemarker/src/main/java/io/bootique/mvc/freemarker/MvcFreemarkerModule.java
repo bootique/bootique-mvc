@@ -17,23 +17,25 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.freemarker;
+package io.bootique.mvc.freemarker;
 
-import io.bootique.BQModuleMetadata;
-import io.bootique.BQModuleProvider;
-import io.bootique.di.BQModule;
+import io.bootique.ConfigModule;
+import io.bootique.di.Binder;
+import io.bootique.di.Provides;
+import io.bootique.mvc.MvcModule;
 
-public class MvcFreemarkerModuleProvider implements BQModuleProvider {
+import javax.inject.Singleton;
 
-	@Override
-	public BQModule module() {
-		return new MvcFreemarkerModule();
-	}
+public class MvcFreemarkerModule extends ConfigModule {
 
-	@Override
-	public BQModuleMetadata.Builder moduleBuilder() {
-		return BQModuleProvider.super
-				.moduleBuilder()
-				.description("Provides a renderer for bootique-mvc templates based on Freemarker framework.");
-	}
+    @Override
+    public void configure(Binder binder) {
+        MvcModule.extend(binder).setRenderer(".ftl", FreemarkerTemplateRenderer.class);
+    }
+
+    @Provides
+    @Singleton
+    public FreemarkerIntegrationService createFreemarkerService() {
+        return new FreemarkerIntegrationService();
+    }
 }

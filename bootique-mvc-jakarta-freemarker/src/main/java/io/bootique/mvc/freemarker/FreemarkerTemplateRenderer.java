@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.freemarker;
+package io.bootique.mvc.freemarker;
 
 import freemarker.template.TemplateException;
 import io.bootique.mvc.Template;

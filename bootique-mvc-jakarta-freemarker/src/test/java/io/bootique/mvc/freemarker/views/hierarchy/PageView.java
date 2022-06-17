@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.freemarker.views.hierarchy;
+package io.bootique.mvc.freemarker.views.hierarchy;
 
 import io.bootique.mvc.AbstractView;
 

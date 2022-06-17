@@ -17,29 +17,23 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.freemarker.views;
+package io.bootique.mvc.freemarker;
 
-import io.bootique.mvc.AbstractView;
+import io.bootique.BQModuleMetadata;
+import io.bootique.BQModuleProvider;
+import io.bootique.di.BQModule;
 
-import java.util.Objects;
+public class MvcFreemarkerModuleProvider implements BQModuleProvider {
 
-public class HelloWorldView extends AbstractView {
-
-	private final String firstName;
-	private final String lastName;
-
-	public HelloWorldView(String template, String firstName, String lastName) {
-		super(template);
-		this.firstName = Objects.requireNonNull(firstName);
-		this.lastName = Objects.requireNonNull(lastName);
+	@Override
+	public BQModule module() {
+		return new MvcFreemarkerModule();
 	}
 
-	public String getFirstName() {
-		return firstName;
+	@Override
+	public BQModuleMetadata.Builder moduleBuilder() {
+		return BQModuleProvider.super
+				.moduleBuilder()
+				.description("Provides a renderer for bootique-mvc templates based on Freemarker framework.");
 	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
 }

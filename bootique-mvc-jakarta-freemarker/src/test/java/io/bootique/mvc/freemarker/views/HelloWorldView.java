@@ -17,25 +17,29 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.freemarker;
+package io.bootique.mvc.freemarker.views;
 
-import io.bootique.ConfigModule;
-import io.bootique.di.Binder;
-import io.bootique.di.Provides;
-import io.bootique.mvc.MvcModule;
+import io.bootique.mvc.AbstractView;
 
-import javax.inject.Singleton;
+import java.util.Objects;
 
-public class MvcFreemarkerModule extends ConfigModule {
+public class HelloWorldView extends AbstractView {
 
-    @Override
-    public void configure(Binder binder) {
-        MvcModule.extend(binder).setRenderer(".ftl", FreemarkerTemplateRenderer.class);
-    }
+	private final String firstName;
+	private final String lastName;
 
-    @Provides
-    @Singleton
-    public FreemarkerIntegrationService createFreemarkerService() {
-        return new FreemarkerIntegrationService();
-    }
+	public HelloWorldView(String template, String firstName, String lastName) {
+		super(template);
+		this.firstName = Objects.requireNonNull(firstName);
+		this.lastName = Objects.requireNonNull(lastName);
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
 }
