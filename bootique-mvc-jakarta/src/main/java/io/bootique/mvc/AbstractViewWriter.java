@@ -17,10 +17,10 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta;
+package io.bootique.mvc;
 
-import io.bootique.mvc.jakarta.renderer.TemplateRendererFactory;
-import io.bootique.mvc.jakarta.resolver.TemplateResolver;
+import io.bootique.mvc.renderer.TemplateRendererFactory;
+import io.bootique.mvc.resolver.TemplateResolver;
 import jakarta.inject.Provider;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.container.ResourceInfo;

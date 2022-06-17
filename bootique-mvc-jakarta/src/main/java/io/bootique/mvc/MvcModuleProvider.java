@@ -17,13 +17,13 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta;
+package io.bootique.mvc;
 
 import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
 import io.bootique.di.BQModule;
 import io.bootique.jersey.JerseyModuleProvider;
-import io.bootique.mvc.jakarta.resolver.TemplateResolverFactory;
+import io.bootique.mvc.resolver.TemplateResolverFactory;
 
 import java.lang.reflect.Type;
 import java.util.Collection;

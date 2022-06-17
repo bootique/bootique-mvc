@@ -20,8 +20,8 @@
 package io.bootique.mvc.jakarta.freemarker;
 
 import freemarker.template.TemplateException;
-import io.bootique.mvc.jakarta.Template;
-import io.bootique.mvc.jakarta.renderer.TemplateRenderer;
+import io.bootique.mvc.Template;
+import io.bootique.mvc.renderer.TemplateRenderer;
 
 import javax.inject.Inject;
 import java.io.IOException;

@@ -17,11 +17,11 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.renderer;
+package io.bootique.mvc.renderer;
 
 import java.util.Map;
 
-import io.bootique.mvc.jakarta.Template;
+import io.bootique.mvc.Template;
 
 public class ByExtensionTemplateRendererFactory implements TemplateRendererFactory {
 

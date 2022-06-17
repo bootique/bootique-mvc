@@ -17,11 +17,12 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.renderer;
+package io.bootique.mvc.resolver;
 
-import io.bootique.mvc.jakarta.Template;
+import io.bootique.mvc.Template;
 
-public interface TemplateRendererFactory {
+public interface TemplateResolver {
 
-	TemplateRenderer getRenderer(Template template);
+	Template resolve(String templateName, Class<?> viewType);
+
 }

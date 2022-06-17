@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.resolver;
+package io.bootique.mvc.resolver;
 
 import io.bootique.resource.FolderResourceFactory;
 import org.junit.jupiter.api.Test;
@@ -40,7 +40,7 @@ public class DefaultTemplateResolverTest {
 
         DefaultTemplateResolver resolver = resolver("");
 
-        URL expected = baseUrl("io/bootique/mvc/jakarta/resolver/tName.txt");
+        URL expected = baseUrl("io/bootique/mvc/resolver/tName.txt");
         assertEquals(expected, resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
         assertEquals(expected, resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class));
     }
@@ -97,7 +97,7 @@ public class DefaultTemplateResolverTest {
 
         DefaultTemplateResolver resolver = resolver("classpath:");
 
-        URL expected = baseClasspathUrl("io/bootique/mvc/jakarta/resolver/tName.txt");
+        URL expected = baseClasspathUrl("io/bootique/mvc/resolver/tName.txt");
         assertEquals(expected, resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
         assertEquals(expected, resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class));
     }
@@ -105,7 +105,7 @@ public class DefaultTemplateResolverTest {
     @Test
     public void testResourcePath_ClasspathBase_Slash() throws MalformedURLException {
         DefaultTemplateResolver resolver = resolver("classpath:/");
-        assertEquals(baseClasspathUrl("io/bootique/mvc/jakarta/resolver/tName.txt"),
+        assertEquals(baseClasspathUrl("io/bootique/mvc/resolver/tName.txt"),
                 resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
     }
 

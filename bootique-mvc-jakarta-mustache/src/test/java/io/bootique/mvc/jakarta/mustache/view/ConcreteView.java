@@ -19,7 +19,7 @@
 
 package io.bootique.mvc.jakarta.mustache.view;
 
-import io.bootique.mvc.jakarta.AbstractView;
+import io.bootique.mvc.AbstractView;
 
 // intentionally keeping the view class in a different package
 // from API and IT to test per-package template loading

@@ -19,7 +19,7 @@
 
 package io.bootique.mvc.jakarta.freemarker.views.hierarchy;
 
-import io.bootique.mvc.jakarta.AbstractView;
+import io.bootique.mvc.AbstractView;
 
 import java.util.Map;
 

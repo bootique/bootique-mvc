@@ -17,29 +17,30 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta;
+package io.bootique.mvc;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.Charset;
+import io.bootique.BQRuntime;
+import io.bootique.jersey.JerseyModule;
+import io.bootique.junit5.*;
+import org.junit.jupiter.api.Test;
 
-public interface Template {
+@BQTest
+public class MvcModuleProviderTest {
 
-	String getName();
+    @BQTestTool
+    public BQTestFactory testFactory = new BQTestFactory();
 
-	Charset getEncoding();
+    @Test
+    public void testAutoLoadable() {
+        BQModuleProviderChecker.testAutoLoadable(MvcModuleProvider.class);
+    }
 
-	URL getUrl();
-
-	default Reader reader() {
-		Charset encoding = getEncoding();
-		URL url = getUrl();
-		try {
-			return new InputStreamReader(url.openStream(), encoding);
-		} catch (IOException e) {
-			throw new RuntimeException("Error opening URL: " + url, e);
-		}
-	}
+    @Test
+    public void testModuleDeclaresDependencies() {
+        final BQRuntime bqRuntime = testFactory.app().moduleProvider(new MvcModuleProvider()).createRuntime();
+        BQRuntimeChecker.testModulesLoaded(bqRuntime,
+                JerseyModule.class,
+                MvcModule.class
+        );
+    }
 }

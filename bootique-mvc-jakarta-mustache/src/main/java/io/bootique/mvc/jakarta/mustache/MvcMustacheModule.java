@@ -21,7 +21,7 @@ package io.bootique.mvc.jakarta.mustache;
 
 import io.bootique.ConfigModule;
 import io.bootique.di.Binder;
-import io.bootique.mvc.jakarta.MvcModule;
+import io.bootique.mvc.MvcModule;
 
 public class MvcMustacheModule extends ConfigModule {
 

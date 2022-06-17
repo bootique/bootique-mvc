@@ -17,14 +17,26 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.renderer;
+package io.bootique.mvc;
 
-import java.io.IOException;
-import java.io.Writer;
+import io.bootique.mvc.renderer.TemplateRendererFactory;
+import io.bootique.mvc.resolver.TemplateResolver;
+import jakarta.ws.rs.core.Feature;
+import jakarta.ws.rs.core.FeatureContext;
 
-import io.bootique.mvc.jakarta.Template;
+public class MvcFeature implements Feature {
 
-public interface TemplateRenderer {
+	private TemplateResolver templateResolver;
+	private TemplateRendererFactory templateRendererFactory;
 
-	void render(Writer out, Template template, Object rootModel) throws IOException;
+	public MvcFeature(TemplateResolver templateResolver, TemplateRendererFactory templateRendererFactory) {
+		this.templateResolver = templateResolver;
+		this.templateRendererFactory = templateRendererFactory;
+	}
+
+	@Override
+	public boolean configure(FeatureContext context) {
+		context.register(new AbstractViewWriter(templateResolver, templateRendererFactory));
+		return true;
+	}
 }

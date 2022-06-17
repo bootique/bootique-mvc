@@ -17,12 +17,12 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta;
+package io.bootique.mvc;
 
 import io.bootique.ModuleExtender;
 import io.bootique.di.Binder;
 import io.bootique.di.MapBuilder;
-import io.bootique.mvc.jakarta.renderer.TemplateRenderer;
+import io.bootique.mvc.renderer.TemplateRenderer;
 
 public class MvcModuleExtender extends ModuleExtender<MvcModuleExtender> {
 

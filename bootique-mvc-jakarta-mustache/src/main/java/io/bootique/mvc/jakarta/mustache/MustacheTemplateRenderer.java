@@ -22,8 +22,8 @@ package io.bootique.mvc.jakarta.mustache;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import io.bootique.mvc.jakarta.Template;
-import io.bootique.mvc.jakarta.renderer.TemplateRenderer;
+import io.bootique.mvc.Template;
+import io.bootique.mvc.renderer.TemplateRenderer;
 
 import java.io.IOException;
 import java.io.Reader;

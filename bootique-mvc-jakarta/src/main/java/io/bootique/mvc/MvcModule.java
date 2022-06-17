@@ -17,18 +17,18 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta;
+package io.bootique.mvc;
 
 import io.bootique.ConfigModule;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.jersey.JerseyModule;
-import io.bootique.mvc.jakarta.renderer.ByExtensionTemplateRendererFactory;
-import io.bootique.mvc.jakarta.renderer.TemplateRenderer;
-import io.bootique.mvc.jakarta.renderer.TemplateRendererFactory;
-import io.bootique.mvc.jakarta.resolver.TemplateResolver;
-import io.bootique.mvc.jakarta.resolver.TemplateResolverFactory;
+import io.bootique.mvc.renderer.ByExtensionTemplateRendererFactory;
+import io.bootique.mvc.renderer.TemplateRenderer;
+import io.bootique.mvc.renderer.TemplateRendererFactory;
+import io.bootique.mvc.resolver.TemplateResolver;
+import io.bootique.mvc.resolver.TemplateResolverFactory;
 
 import javax.inject.Singleton;
 import java.util.Map;

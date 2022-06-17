@@ -17,26 +17,11 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta;
+package io.bootique.mvc.renderer;
 
-import io.bootique.mvc.jakarta.renderer.TemplateRendererFactory;
-import io.bootique.mvc.jakarta.resolver.TemplateResolver;
-import jakarta.ws.rs.core.Feature;
-import jakarta.ws.rs.core.FeatureContext;
+import io.bootique.mvc.Template;
 
-public class MvcFeature implements Feature {
+public interface TemplateRendererFactory {
 
-	private TemplateResolver templateResolver;
-	private TemplateRendererFactory templateRendererFactory;
-
-	public MvcFeature(TemplateResolver templateResolver, TemplateRendererFactory templateRendererFactory) {
-		this.templateResolver = templateResolver;
-		this.templateRendererFactory = templateRendererFactory;
-	}
-
-	@Override
-	public boolean configure(FeatureContext context) {
-		context.register(new AbstractViewWriter(templateResolver, templateRendererFactory));
-		return true;
-	}
+	TemplateRenderer getRenderer(Template template);
 }

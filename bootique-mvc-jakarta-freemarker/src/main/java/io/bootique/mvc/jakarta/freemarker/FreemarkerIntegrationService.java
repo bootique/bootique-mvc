@@ -55,7 +55,7 @@ class FreemarkerIntegrationService {
             @Override
             public TemplateLookupResult lookup(TemplateLookupContext templateLookupContext) throws IOException {
                 // root template, can be different from template we currently lookup (e.g. in case of #include directive)
-                io.bootique.mvc.jakarta.Template bqTemplate = (io.bootique.mvc.jakarta.Template)templateLookupContext
+                io.bootique.mvc.Template bqTemplate = (io.bootique.mvc.Template)templateLookupContext
                         .getCustomLookupCondition();
                 String templateName = templateLookupContext.getTemplateName();
                 URI uri;
@@ -71,7 +71,7 @@ class FreemarkerIntegrationService {
         cfg.setLogTemplateExceptions(false);
     }
 
-    Template getTemplate(io.bootique.mvc.jakarta.Template bqTemplate) throws IOException {
+    Template getTemplate(io.bootique.mvc.Template bqTemplate) throws IOException {
         return cfg.getTemplate(
                 bqTemplate.getName(),
                 null,

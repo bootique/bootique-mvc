@@ -17,30 +17,14 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta;
+package io.bootique.mvc.renderer;
 
-import io.bootique.BQRuntime;
-import io.bootique.jersey.JerseyModule;
-import io.bootique.junit5.*;
-import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import java.io.Writer;
 
-@BQTest
-public class MvcModuleProviderTest {
+import io.bootique.mvc.Template;
 
-    @BQTestTool
-    public BQTestFactory testFactory = new BQTestFactory();
+public interface TemplateRenderer {
 
-    @Test
-    public void testAutoLoadable() {
-        BQModuleProviderChecker.testAutoLoadable(MvcModuleProvider.class);
-    }
-
-    @Test
-    public void testModuleDeclaresDependencies() {
-        final BQRuntime bqRuntime = testFactory.app().moduleProvider(new MvcModuleProvider()).createRuntime();
-        BQRuntimeChecker.testModulesLoaded(bqRuntime,
-                JerseyModule.class,
-                MvcModule.class
-        );
-    }
+	void render(Writer out, Template template, Object rootModel) throws IOException;
 }

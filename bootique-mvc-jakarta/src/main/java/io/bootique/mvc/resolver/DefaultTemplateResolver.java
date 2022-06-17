@@ -17,9 +17,9 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.resolver;
+package io.bootique.mvc.resolver;
 
-import io.bootique.mvc.jakarta.Template;
+import io.bootique.mvc.Template;
 import io.bootique.resource.FolderResourceFactory;
 
 import java.net.URL;

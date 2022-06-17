@@ -23,7 +23,7 @@ import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
 import io.bootique.di.BQModule;
 import io.bootique.jersey.JerseyModuleProvider;
-import io.bootique.mvc.jakarta.MvcModuleProvider;
+import io.bootique.mvc.MvcModuleProvider;
 
 import java.util.Collection;
 

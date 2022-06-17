@@ -1,1 +1,1 @@
-io.bootique.mvc.jakarta.MvcModuleProvider
+io.bootique.mvc.MvcModuleProvider

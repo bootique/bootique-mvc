@@ -22,7 +22,7 @@ package io.bootique.mvc.jakarta.freemarker;
 import io.bootique.ConfigModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
-import io.bootique.mvc.jakarta.MvcModule;
+import io.bootique.mvc.MvcModule;
 
 import javax.inject.Singleton;
 
