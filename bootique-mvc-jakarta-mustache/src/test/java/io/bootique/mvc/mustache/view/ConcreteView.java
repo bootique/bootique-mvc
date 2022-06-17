@@ -17,17 +17,22 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.mustache;
+package io.bootique.mvc.mustache.view;
 
-import io.bootique.ConfigModule;
-import io.bootique.di.Binder;
-import io.bootique.mvc.MvcModule;
+import io.bootique.mvc.AbstractView;
 
-public class MvcMustacheModule extends ConfigModule {
+// intentionally keeping the view class in a different package
+// from API and IT to test per-package template loading
+public class ConcreteView extends AbstractView {
 
-	@Override
-	public void configure(Binder binder) {
-		MvcModule.extend(binder).setRenderer(".mustache", MustacheTemplateRenderer.class);
+	private final Object model;
+
+	public ConcreteView(String template, Object model) {
+		super(template);
+		this.model = model;
 	}
 
+	public Object getModel() {
+		return model;
+	}
 }

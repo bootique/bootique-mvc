@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.mustache;
+package io.bootique.mvc.mustache;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;

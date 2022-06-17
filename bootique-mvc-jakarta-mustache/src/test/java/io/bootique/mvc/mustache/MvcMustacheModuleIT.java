@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.bootique.mvc.jakarta.mustache;
+package io.bootique.mvc.mustache;
 
 import io.bootique.BQRuntime;
 import io.bootique.Bootique;
@@ -26,7 +26,7 @@ import io.bootique.jetty.junit5.JettyTester;
 import io.bootique.junit5.BQApp;
 import io.bootique.junit5.BQTest;
 import io.bootique.junit5.BQTestTool;
-import io.bootique.mvc.jakarta.mustache.view.ConcreteView;
+import io.bootique.mvc.mustache.view.ConcreteView;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
