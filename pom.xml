@@ -18,8 +18,7 @@
   under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -31,7 +30,7 @@
 
     <groupId>io.bootique.mvc</groupId>
     <artifactId>bootique-mvc-parent</artifactId>
-    <version>3.0.M1-SNAPSHOT</version>
+    <version>3.0.M1</version>
     <packaging>pom</packaging>
     <name>bootique-mvc-parent:</name>
     <description>A parent of Bootoque MVC modules.</description>
@@ -55,7 +54,7 @@
     <scm>
         <developerConnection>scm:git:ssh://git@github.com/bootique/bootique-mvc</developerConnection>
         <url>https://github.com/bootique/bootique-mvc</url>
-        <tag>HEAD</tag>
+        <tag>3.0.M1</tag>
     </scm>
 
     <dependencyManagement>
