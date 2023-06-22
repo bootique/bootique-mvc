@@ -19,36 +19,27 @@
 
 package io.bootique.mvc.mustache;
 
-import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 import io.bootique.mvc.Template;
 import io.bootique.mvc.renderer.TemplateRenderer;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
 
 public class MustacheTemplateRenderer implements TemplateRenderer {
 
-	private final MustacheFactory mustacheFactory;
+    private final ContextAwareMustacheFactory mustacheFactory;
 
-	public MustacheTemplateRenderer() {
-		this.mustacheFactory = new DefaultMustacheFactory();
-	}
+    public MustacheTemplateRenderer() {
+        this.mustacheFactory = new ContextAwareMustacheFactory();
+    }
 
-	@Override
-	public void render(Writer out, Template template, Object rootModel) throws IOException {
+    @Override
+    public void render(Writer out, Template template, Object rootModel) throws IOException {
 
-		// TODO: cache templates...
+        // TODO: cache templates...
 
-		Mustache mustache = compile(template);
-		mustache.execute(out, rootModel).flush();
-	}
-
-	Mustache compile(Template template) {
-		// presumably Mustache closes the reader on its own...
-		Reader reader = template.reader();
-		return mustacheFactory.compile(reader, template.getName());
-	}
+        Mustache mustache = mustacheFactory.compile(template);
+        mustache.execute(out, rootModel).flush();
+    }
 }
