@@ -35,11 +35,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 @BQTest
-public class MvcMustacheModuleIT {
+public class PartialsIT {
 
     @BQTestTool
     static final JettyTester jetty = JettyTester.create();
@@ -53,17 +51,10 @@ public class MvcMustacheModuleIT {
             .createRuntime();
 
     @Test
-    public void testV1() {
-        Response r1 = jetty.getTarget().path("/v1").request().get();
-        assertEquals(Response.Status.OK.getStatusCode(), r1.getStatus());
-        assertEquals("\nv1_string_p1_number_564", r1.readEntity(String.class));
-    }
-
-    @Test
-    public void testV2() {
-        Response r1 = jetty.getTarget().path("/v2").request().get();
-        assertEquals(Response.Status.OK.getStatusCode(), r1.getStatus());
-        assertEquals("\nv2_string_p2_number_5649", r1.readEntity(String.class));
+    public void test() {
+        Response r = jetty.getTarget().path("/").request().get();
+        JettyTester.assertOk(r)
+                .assertContent("<p1start>one<p1end>zero<p2start>two<p2end>");
     }
 
     @Path("/")
@@ -71,42 +62,33 @@ public class MvcMustacheModuleIT {
     public static class Api {
 
         @GET
-        @Path("/v1")
         public ConcreteView getV1() {
-            Model m = new Model();
-            m.setProp1("p1");
-            m.setProp2(564);
-            return new ConcreteView("MvcMustacheModuleIT_v1.mustache", m);
-        }
-
-        @GET
-        @Path("/v2")
-        public ConcreteView getV2() {
-            Model m = new Model();
-            m.setProp1("p2");
-            m.setProp2(5649);
-            return new ConcreteView("MvcMustacheModuleIT_v2.mustache", m);
+            Model m = new Model("zero", "one", "two");
+            return new ConcreteView("PartialsIT.mustache", m);
         }
     }
 
     public static class Model {
-        private String prop1;
-        private int prop2;
+        private final String p0;
+        private final String p1;
+        private final String p2;
 
-        public String getProp1() {
-            return prop1;
+        public Model(String p0, String p1, String p2) {
+            this.p0 = p0;
+            this.p1 = p1;
+            this.p2 = p2;
         }
 
-        public void setProp1(String prop1) {
-            this.prop1 = prop1;
+        public String getP0() {
+            return p0;
         }
 
-        public int getProp2() {
-            return prop2;
+        public String getP1() {
+            return p1;
         }
 
-        public void setProp2(int prop2) {
-            this.prop2 = prop2;
+        public String getP2() {
+            return p2;
         }
     }
 }
