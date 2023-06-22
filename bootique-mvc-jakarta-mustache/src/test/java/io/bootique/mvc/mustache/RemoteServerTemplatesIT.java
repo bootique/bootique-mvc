@@ -31,7 +31,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
@@ -47,8 +46,6 @@ public class RemoteServerTemplatesIT extends TestWithTemplateServer {
             .module(jetty.moduleReplacingConnectors())
             .createRuntime();
 
-    // TODO: re-enable once we fix #24
-    @Disabled
     @Test
     public void test() {
         Response r = jetty.getTarget().request().get();

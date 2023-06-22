@@ -31,11 +31,34 @@ public interface Template {
 
     Charset getEncoding();
 
+    /**
+     * Resolves a URL of this template
+     */
     URL getUrl();
+
+    /**
+     * Resolves a URL of a related resource (such as sub-template).
+     *
+     * @since 3.0
+     */
+    URL getUrl(String resourceName);
 
     default Reader reader() {
         Charset encoding = getEncoding();
         URL url = getUrl();
+        try {
+            return new InputStreamReader(url.openStream(), encoding);
+        } catch (IOException e) {
+            throw new RuntimeException("Error opening URL: " + url, e);
+        }
+    }
+
+    /**
+     * @since 3.0
+     */
+    default Reader reader(String resourceName) {
+        Charset encoding = getEncoding();
+        URL url = getUrl(resourceName);
         try {
             return new InputStreamReader(url.openStream(), encoding);
         } catch (IOException e) {

@@ -31,8 +31,6 @@ import io.bootique.BootiqueException;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 class FreemarkerIntegrationService {
@@ -57,14 +55,8 @@ class FreemarkerIntegrationService {
                 // root template, can be different from template we currently lookup (e.g. in case of #include directive)
                 io.bootique.mvc.Template bqTemplate = (io.bootique.mvc.Template)templateLookupContext
                         .getCustomLookupCondition();
-                String templateName = templateLookupContext.getTemplateName();
-                URI uri;
-                try {
-                    uri = bqTemplate.getUrl().toURI().resolve(templateName);
-                } catch (URISyntaxException e) {
-                    throw new BootiqueException(-1, e.getMessage(), e);
-                }
-                return templateLookupContext.lookupWithAcquisitionStrategy(uri.toURL().toString());
+                URL templateUrl = bqTemplate.getUrl(templateLookupContext.getTemplateName());
+                return templateLookupContext.lookupWithAcquisitionStrategy(templateUrl.toString());
             }
         });
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

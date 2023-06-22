@@ -25,17 +25,18 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
- * A template implementation that resolves template location using view Java type package to construct
- * template path.
+ * A template implementation that resolves template locations relative to the template base. The root URL as well
+ * as URLs for relative resource names are first prepended with the package name of the specified view Java type
+ * before resolving against the base.
  *
  * @since 3.0
  */
 public class ViewTemplate implements Template {
 
     private final String templateName;
-    private final Class<?> viewType;
     private final FolderResourceFactory templateBase;
     private final Charset templateEncoding;
+    private final String packagePath;
 
     private volatile URL url;
 
@@ -46,9 +47,11 @@ public class ViewTemplate implements Template {
             Charset templateEncoding) {
 
         this.templateName = templateName;
-        this.viewType = viewType;
         this.templateBase = templateBase;
         this.templateEncoding = templateEncoding;
+
+        Package pack = viewType.getPackage();
+        this.packagePath = pack != null ? pack.getName().replace('.', '/') + "/" : "";
     }
 
     @Override
@@ -56,11 +59,17 @@ public class ViewTemplate implements Template {
 
         // No synchronization. No harm if the URL is resolved multiple times in parallel
         if (url == null) {
-            String path = relativeResourcePath();
+            String path = resourcePath(templateName);
             this.url = templateBase.getUrl(path);
         }
 
         return url;
+    }
+
+    @Override
+    public URL getUrl(String resourceName) {
+        String path = resourcePath(resourceName);
+        return templateBase.getUrl(path);
     }
 
     @Override
@@ -73,15 +82,43 @@ public class ViewTemplate implements Template {
         return templateName;
     }
 
-    protected String relativeResourcePath() {
+    protected String resourcePath(String resource) {
 
-        // path = viewPackagePath + templateNameWithExt
+        // Similar to "URI.resolve(URI)", if the resource path starts with "/", it is "absolute" and we resolve
+        // it against the template root, if it does not - we resolve it relative to the View Java package path
 
-        String normalizedName = templateName.startsWith("/")
-                ? templateName.substring(1) : templateName;
+        String path = resource.startsWith("/")
+                ? resource
+                : packagePath + resource;
 
-        Package pack = viewType.getPackage();
-        String packagePath = pack != null ? pack.getName().replace('.', '/') + "/" : "";
-        return packagePath + normalizedName;
+        checkPathWithinBounds(path);
+        return path;
+    }
+
+    protected void checkPathWithinBounds(String resourcePath) {
+
+        if (resourcePath.length() < 2) {
+            return;
+        }
+
+        int depth = 0;
+
+        // account for windows paths
+        String normalizedPath = resourcePath.replace('\\', '/');
+
+        for (String component : normalizedPath.split("/")) {
+            if (component.length() > 0) {
+                if ("..".equals(component)) {
+                    depth--;
+
+                    if (depth < 0) {
+                        throw new RuntimeException("Path is outside the template base: " + resourcePath);
+                    }
+
+                } else {
+                    depth++;
+                }
+            }
+        }
     }
 }
