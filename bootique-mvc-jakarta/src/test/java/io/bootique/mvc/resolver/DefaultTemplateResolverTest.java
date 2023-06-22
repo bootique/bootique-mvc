@@ -41,8 +41,8 @@ public class DefaultTemplateResolverTest {
         DefaultTemplateResolver resolver = resolver("");
 
         URL expected = baseUrl("io/bootique/mvc/resolver/tName.txt");
-        assertEquals(expected, resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
-        assertEquals(expected, resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class));
+        assertEquals(expected, resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl());
+        assertEquals(expected, resolver.resolve("/tName.txt", DefaultTemplateResolverTest.class).getUrl());
     }
 
     @Test
@@ -53,9 +53,9 @@ public class DefaultTemplateResolverTest {
         File canonical = new File("/tmp/io/bootique/mvc/resolver/tName.txt").getCanonicalFile();
 
         assertEquals(canonical.toURI().toURL(),
-                resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
+                resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl());
         assertEquals(canonical.toURI().toURL(),
-                resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class));
+                resolver.resolve("/tName.txt", DefaultTemplateResolverTest.class).getUrl());
     }
 
     @Test
@@ -65,9 +65,9 @@ public class DefaultTemplateResolverTest {
         File canonical = new File("/tmp/io/bootique/mvc/resolver/tName.txt").getCanonicalFile();
 
         assertEquals(canonical.toURI().toURL(),
-                resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
+                resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl());
         assertEquals(canonical.toURI().toURL(),
-                resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class));
+                resolver.resolve("/tName.txt", DefaultTemplateResolverTest.class).getUrl());
     }
 
     @Test
@@ -76,9 +76,9 @@ public class DefaultTemplateResolverTest {
         DefaultTemplateResolver resolver = resolver("http://example.org/a");
 
         assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
-                resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
+                resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl().toExternalForm());
         assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
-                resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
+                resolver.resolve("/tName.txt", DefaultTemplateResolverTest.class).getUrl().toExternalForm());
     }
 
     @Test
@@ -87,9 +87,9 @@ public class DefaultTemplateResolverTest {
         DefaultTemplateResolver resolver = resolver("http://example.org/a/");
 
         assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
-                resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
+                resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl().toExternalForm());
         assertEquals("http://example.org/a/io/bootique/mvc/resolver/tName.txt",
-                resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class).toExternalForm());
+                resolver.resolve("/tName.txt", DefaultTemplateResolverTest.class).getUrl().toExternalForm());
     }
 
     @Test
@@ -98,15 +98,15 @@ public class DefaultTemplateResolverTest {
         DefaultTemplateResolver resolver = resolver("classpath:");
 
         URL expected = baseClasspathUrl("io/bootique/mvc/resolver/tName.txt");
-        assertEquals(expected, resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
-        assertEquals(expected, resolver.resourceUrl("/tName.txt", DefaultTemplateResolverTest.class));
+        assertEquals(expected, resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl());
+        assertEquals(expected, resolver.resolve("/tName.txt", DefaultTemplateResolverTest.class).getUrl());
     }
 
     @Test
     public void testResourcePath_ClasspathBase_Slash() throws MalformedURLException {
         DefaultTemplateResolver resolver = resolver("classpath:/");
         assertEquals(baseClasspathUrl("io/bootique/mvc/resolver/tName.txt"),
-                resolver.resourceUrl("tName.txt", DefaultTemplateResolverTest.class));
+                resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl());
     }
 
     private DefaultTemplateResolver resolver(String basePath) {

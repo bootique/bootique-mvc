@@ -27,19 +27,19 @@ import java.nio.charset.Charset;
 
 public interface Template {
 
-	String getName();
+    String getName();
 
-	Charset getEncoding();
+    Charset getEncoding();
 
-	URL getUrl();
+    URL getUrl();
 
-	default Reader reader() {
-		Charset encoding = getEncoding();
-		URL url = getUrl();
-		try {
-			return new InputStreamReader(url.openStream(), encoding);
-		} catch (IOException e) {
-			throw new RuntimeException("Error opening URL: " + url, e);
-		}
-	}
+    default Reader reader() {
+        Charset encoding = getEncoding();
+        URL url = getUrl();
+        try {
+            return new InputStreamReader(url.openStream(), encoding);
+        } catch (IOException e) {
+            throw new RuntimeException("Error opening URL: " + url, e);
+        }
+    }
 }
