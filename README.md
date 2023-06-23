@@ -85,7 +85,15 @@ public class SomePageView extends AbstractView {
     }
 }
 ```
-Now let's create a Mustache template in the project resources folder under `org/example/view/some-page.mustache`.
+
+Configure the app to resolve templates relative to a folder on a classpath :
+
+```yaml
+mvc:
+  templateBase: "classpath:templates"
+```
+
+Now let's create a Mustache template in the project resources folder under `templates/org/example/view/some-page.mustache`.
 The view object serves as a root context during template rendering. Properties of the object act as models to fill 
 the dynamic parts of the template.
 
@@ -95,13 +103,6 @@ the dynamic parts of the template.
 <h1>Hi, {{firstName}} {{lastName}}!</h1>
 </body>
 </html>
-```
-
-Configure the app to resolve templates relative to classpath:
-
-```yaml
-mvc:
-  templateBase: "classpath:"
 ```
 
 Finally, create a "controller" class, which is a JAX-RS endpoint that returns views. Note that a single controller 
@@ -126,18 +127,16 @@ Now when you hit `/some-page?fn=Joe&ln=Smith`, you'd get a page that says "hi".
 
 ### Template Resolving
 
-In the example above we set the template base to be "classpath:" root. But it can also be set to a filesystem directory
-or a URL on a public web server. The only requirement is that a single base should be used by all templates. 
+In the example above we set the template base to be `classpath:templates`. But it can also be set to a filesystem 
+directory or a URL on a public web server. The only requirement is that a single base is shared by all templates.
+Assuming the base is `classpath:templates`, here are some simple rules for path resolution:
 
-The rules for template name resolution:
-
-* template paths are resolved relative to the `templateBase` location.
-* if a template name DOES NOT start with a forward slash, before resolving the template, a path corresponding to the 
-view package is prepended to the name. So in the example above `some-page.mustache` becomes 
-`classpath:org/example/view/some-page.mustache`. 
-* if a template name starts with a forward slash, it is resolved directly against `templateBase`. So 
-`/some-page.mustache` would be resolved as `classpath:some-page.mustache`.
-* Template names can reference parent directories via `../`. So `../some-page.mustache` would be resolved as 
-`classpath:org/example/some-page.mustache`. If a parent directory is outside of the `templateBase`, an exception is thrown.
-* Templates can have includes (called "partials" in Mustache). The rules for resolving includes  are the same as the 
-root template above. 
+* Template path with no leading forward slash will be prepended with a path corresponding to the view package:
+`some-page.mustache` -> `classpath:templates/org/example/view/some-page.mustache`. 
+* Template path starting with a forward slash is resolved directly against `templateBase`:
+`/some-page.mustache` -> `classpath:templates/some-page.mustache`
+* Template path can reference parent directories via `../`:  `../some-page.mustache` -> 
+`classpath:templates/org/example/some-page.mustache`. 
+* If a parent directory is outside the `templateBase`, an exception is thrown: `../../../../some-page.mustache` -> throws
+* Templates can include other templates (such includes are called "partials" in Mustache). The rules for resolving 
+includes are the same as for the root templates.
