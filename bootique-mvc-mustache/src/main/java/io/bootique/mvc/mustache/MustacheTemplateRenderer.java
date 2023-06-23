@@ -19,19 +19,19 @@
 
 package io.bootique.mvc.mustache;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import io.bootique.mvc.Template;
 import io.bootique.mvc.renderer.TemplateRenderer;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+
 public class MustacheTemplateRenderer implements TemplateRenderer {
 
-	private MustacheFactory mustacheFactory;
+	private final MustacheFactory mustacheFactory;
 
 	public MustacheTemplateRenderer() {
 		this.mustacheFactory = new DefaultMustacheFactory();

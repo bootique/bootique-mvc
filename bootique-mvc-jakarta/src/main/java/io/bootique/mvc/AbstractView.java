@@ -20,6 +20,7 @@
 package io.bootique.mvc;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A superclass of MVC views. It contains a name of the view template, that is
@@ -29,7 +30,7 @@ import java.nio.charset.Charset;
  */
 public abstract class AbstractView {
 
-	private static final Charset UTF8 = Charset.forName("UTF-8");
+	private static final Charset UTF8 = StandardCharsets.UTF_8;
 
 	protected String templateName;
 	protected Charset encoding;

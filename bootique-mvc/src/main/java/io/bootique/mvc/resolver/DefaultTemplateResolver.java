@@ -28,8 +28,8 @@ import java.util.Objects;
 
 public class DefaultTemplateResolver implements TemplateResolver {
 
-    private Charset templateEncoding;
-    private FolderResourceFactory templateBase;
+    private final Charset templateEncoding;
+    private final FolderResourceFactory templateBase;
 
     public DefaultTemplateResolver(FolderResourceFactory templateBase, Charset templateEncoding) {
         this.templateBase = templateBase;

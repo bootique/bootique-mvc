@@ -31,7 +31,7 @@ import java.io.Writer;
 
 public class MustacheTemplateRenderer implements TemplateRenderer {
 
-	private MustacheFactory mustacheFactory;
+	private final MustacheFactory mustacheFactory;
 
 	public MustacheTemplateRenderer() {
 		this.mustacheFactory = new DefaultMustacheFactory();
