@@ -1,3 +1,7 @@
+## 3.0.M2
+
+* #25 Unified template resolving mechanism
+
 ## 3.0.M1
 
 * #21 JakartaEE-compatible version
