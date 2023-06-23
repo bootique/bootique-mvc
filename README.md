@@ -114,7 +114,9 @@ public static class Pages {
 
     @GET
     @Path("some-page")
-    public SomePageView somePage(@QueryParam("fn") String firstName, @QueryParam("ln") String lastName) {
+    public SomePageView somePage(
+            @QueryParam("fn") String firstName, 
+            @QueryParam("ln") String lastName) {
         return new SomePageView(firstName, lastName);
     }
 }
