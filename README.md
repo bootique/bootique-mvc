@@ -140,3 +140,14 @@ Assuming the base is `classpath:templates`, here are some simple rules for path 
 * If a parent directory is outside the `templateBase`, an exception is thrown: `../../../../some-page.mustache` -> throws
 * Templates can include other templates (such includes are called "partials" in Mustache). The rules for resolving 
 includes are the same as for the root templates.
+
+### Template Caching
+
+By default `bootique-mvc` would reload a template on every call. This is great in development mode, but is 
+going to result in poor performance in production. To configure template caching, you'll need to set an extra
+property in config. E.g.:
+
+```yaml
+mvc:
+  templateTtl: 1min
+```
