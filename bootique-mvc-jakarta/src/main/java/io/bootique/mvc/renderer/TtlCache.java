@@ -56,20 +56,20 @@ class TtlCache implements RenderableTemplateCache {
             this.lock = new ReentrantLock();
         }
 
-        boolean isExpired() {
-            return expiresOn < System.currentTimeMillis();
-        }
-
         <T> T updateIfNeeded(Template template, Function<Template, T> renderedTemplateMaker) {
 
-            if (isExpired()) {
+            long e = this.expiresOn;
+            if (e < System.currentTimeMillis()) {
 
                 lock.lock();
                 try {
 
-                    if (isExpired()) {
-                        value = renderedTemplateMaker.apply(template);
-                        expiresOn = System.currentTimeMillis() + ttlMs;
+                    // Save a call to System.currentTimeMillis(), instead see if someone else already updated
+                    // the template while we were waiting.
+
+                    if (e >= this.expiresOn) {
+                        this.value = renderedTemplateMaker.apply(template);
+                        this.expiresOn = System.currentTimeMillis() + ttlMs;
                     }
 
                 } finally {
