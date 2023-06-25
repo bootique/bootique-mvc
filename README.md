@@ -151,3 +151,5 @@ property in config. E.g.:
 mvc:
   templateTtl: 1min
 ```
+
+_TODO: as of Bootique 3.0.M2, this only works for Mustache, and not Freemarker until [this task](https://github.com/bootique/bootique-mvc/issues/27) is complete._
