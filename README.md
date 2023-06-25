@@ -108,8 +108,8 @@ Now let's create a Mustache template in the project resources folder under
 </html>
 ```
 
-Finally, create a "controller" class, which is a JAX-RS endpoint that returns views. Note that a single controller 
-can return multiple "pages".
+Finally, create a "controller" class, which is a collection of JAX-RS endpoints that return view instances in response 
+to user requests. So a single controller can serve multiple "pages" (e.g. those that share a common URL path prefix).
 
 ```java
 @Path("/")
