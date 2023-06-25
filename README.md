@@ -58,8 +58,12 @@ Include the flavor of bootique-mvc you are planning to use, e.g. Jakarta / Musta
 
 ### Create HTML page
 
-Create a "view" class extending `AbstractView`. Pay attention to the Java package. Template name defined in constructor 
-will be located under the path matching the view package:
+Create a "view" class extending `AbstractView`. It performs two functions:
+
+* Defines the location of the page template. Pay attention to the view Java package. Usually template file will be 
+located under the path matching the view package (see the next section on template resolving mechanism).
+* Serves as a "root context" during template rendering, providing values for the template variables. So the view is 
+also a holder of the page "model". 
 
 ```java
 package org.example.view;
@@ -93,9 +97,8 @@ mvc:
   templateBase: "classpath:templates"
 ```
 
-Now let's create a Mustache template in the project resources folder under `templates/org/example/view/some-page.mustache`.
-The view object serves as a root context during template rendering. Properties of the object act as models to fill 
-the dynamic parts of the template.
+Now let's create a Mustache template in the project resources folder under 
+`templates/org/example/view/some-page.mustache`.
 
 ```
 <html>
