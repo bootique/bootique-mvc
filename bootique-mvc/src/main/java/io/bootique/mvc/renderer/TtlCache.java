@@ -48,7 +48,7 @@ class TtlCache implements RenderableTemplateCache {
         private final Lock lock;
 
         volatile long expiresOn;
-        Object value;
+        volatile Object value;
 
         CacheEntry() {
             // create as expired
