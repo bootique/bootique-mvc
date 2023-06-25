@@ -25,6 +25,9 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+/**
+ * A generic locator of a template resource that helps to resolve an actual provider-specific template.
+ */
 public interface Template {
 
     String getName();
@@ -32,12 +35,12 @@ public interface Template {
     Charset getEncoding();
 
     /**
-     * Resolves a URL of this template
+     * Returns a URL of this template
      */
     URL getUrl();
 
     /**
-     * Resolves a URL of a related resource (such as sub-template).
+     * Returns a URL of a related resource (such as sub-template).
      *
      * @since 3.0
      */

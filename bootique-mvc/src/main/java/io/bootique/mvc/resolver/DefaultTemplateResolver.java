@@ -41,6 +41,10 @@ public class DefaultTemplateResolver implements TemplateResolver {
 
         // Bootique MVC template is just a URL resolver. So no need to cache it.
         // Actual templates may be cached by rendering engine providers in provider-specific way
-        return new ViewTemplate(templateName, viewType, templateBase, templateEncoding);
+
+        Package pkg = viewType.getPackage();
+        String path = pkg != null ? pkg.getName().replace('.', '/') + "/" : "";
+
+        return new DefaultTemplate(templateBase, path, templateName, templateEncoding);
     }
 }

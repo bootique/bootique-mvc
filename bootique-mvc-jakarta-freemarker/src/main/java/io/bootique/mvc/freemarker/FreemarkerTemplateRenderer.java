@@ -29,21 +29,20 @@ import java.io.Writer;
 
 public class FreemarkerTemplateRenderer implements TemplateRenderer {
 
-	private FreemarkerIntegrationService freemarkerIntegration;
+    private FreemarkerIntegrationService freemarkerIntegration;
 
-	@Inject
-	public FreemarkerTemplateRenderer(FreemarkerIntegrationService freemarkerIntegration) {
-		this.freemarkerIntegration = freemarkerIntegration;
-	}
+    @Inject
+    public FreemarkerTemplateRenderer(FreemarkerIntegrationService freemarkerIntegration) {
+        this.freemarkerIntegration = freemarkerIntegration;
+    }
 
-	@Override
-	public void render(Writer out, Template template, Object rootModel) throws IOException {
-		freemarker.template.Template freemarkerTemplate = freemarkerIntegration.getTemplate(template);
-		try {
-			freemarkerTemplate.process(rootModel, out);
-		} catch (TemplateException ex) {
-			throw new IOException(String
-					.format("Unexpected exception while processing template: %s", template.getUrl().getPath()), ex);
-		}
-	}
+    @Override
+    public void render(Writer out, Template template, Object rootModel) throws IOException {
+        freemarker.template.Template freemarkerTemplate = freemarkerIntegration.getTemplate(template);
+        try {
+            freemarkerTemplate.process(rootModel, out);
+        } catch (TemplateException ex) {
+            throw new IOException("Unexpected exception while processing template: " + template.getUrl().getPath(), ex);
+        }
+    }
 }

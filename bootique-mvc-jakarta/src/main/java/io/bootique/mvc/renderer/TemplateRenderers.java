@@ -17,27 +17,11 @@
  * under the License.
  */
 
-package io.bootique.mvc;
+package io.bootique.mvc.renderer;
 
-import io.bootique.mvc.renderer.TemplateRenderers;
-import io.bootique.mvc.resolver.TemplateResolver;
+import io.bootique.mvc.Template;
 
-import javax.ws.rs.core.Feature;
-import javax.ws.rs.core.FeatureContext;
+public interface TemplateRenderers {
 
-public class MvcFeature implements Feature {
-
-	private final TemplateResolver templateResolver;
-	private final TemplateRenderers templateRenderers;
-
-	public MvcFeature(TemplateResolver templateResolver, TemplateRenderers templateRenderers) {
-		this.templateResolver = templateResolver;
-		this.templateRenderers = templateRenderers;
-	}
-
-	@Override
-	public boolean configure(FeatureContext context) {
-		context.register(new AbstractViewWriter(templateResolver, templateRenderers));
-		return true;
-	}
+	TemplateRenderer getRenderer(Template template);
 }

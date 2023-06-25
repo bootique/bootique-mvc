@@ -45,8 +45,7 @@ public class FreemarkerTemplateRenderer implements TemplateRenderer {
 		try {
 			freemarkerTemplate.process(rootModel, out);
 		} catch (TemplateException ex) {
-			throw new IOException(String
-					.format("Unexpected exception while processing template: %s", template.getUrl().getPath()), ex);
+			throw new IOException("Unexpected exception while processing template: " + template.getUrl().getPath(), ex);
 		}
 	}
 }

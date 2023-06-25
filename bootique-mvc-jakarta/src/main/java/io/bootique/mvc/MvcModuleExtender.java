@@ -38,13 +38,13 @@ public class MvcModuleExtender extends ModuleExtender<MvcModuleExtender> {
         return this;
     }
 
-    public MvcModuleExtender setRenderer(String handledExtension, TemplateRenderer renderer) {
-        contributeRenderers().putInstance(handledExtension, renderer);
+    public MvcModuleExtender setRenderer(String templateExtension, TemplateRenderer renderer) {
+        contributeRenderers().putInstance(templateExtension, renderer);
         return this;
     }
 
-    public MvcModuleExtender setRenderer(String handledExtension, Class<? extends TemplateRenderer> rendererType) {
-        contributeRenderers().put(handledExtension, rendererType);
+    public MvcModuleExtender setRenderer(String templateExtension, Class<? extends TemplateRenderer> rendererType) {
+        contributeRenderers().put(templateExtension, rendererType);
         return this;
     }
 

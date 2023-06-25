@@ -19,24 +19,24 @@
 
 package io.bootique.mvc;
 
-import io.bootique.mvc.renderer.TemplateRendererFactory;
+import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
 import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.FeatureContext;
 
 public class MvcFeature implements Feature {
 
-	private TemplateResolver templateResolver;
-	private TemplateRendererFactory templateRendererFactory;
+	private final TemplateResolver templateResolver;
+	private final TemplateRenderers templateRenderers;
 
-	public MvcFeature(TemplateResolver templateResolver, TemplateRendererFactory templateRendererFactory) {
+	public MvcFeature(TemplateResolver templateResolver, TemplateRenderers templateRenderers) {
 		this.templateResolver = templateResolver;
-		this.templateRendererFactory = templateRendererFactory;
+		this.templateRenderers = templateRenderers;
 	}
 
 	@Override
 	public boolean configure(FeatureContext context) {
-		context.register(new AbstractViewWriter(templateResolver, templateRendererFactory));
+		context.register(new AbstractViewWriter(templateResolver, templateRenderers));
 		return true;
 	}
 }

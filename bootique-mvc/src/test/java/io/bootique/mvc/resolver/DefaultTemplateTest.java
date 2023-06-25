@@ -16,12 +16,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package io.bootique.mvc.resolver;
 
-package io.bootique.mvc.renderer;
+import org.junit.jupiter.api.Test;
 
-import io.bootique.mvc.Template;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface TemplateRendererFactory {
+public class DefaultTemplateTest {
 
-	TemplateRenderer getRenderer(Template template);
+    @Test
+    public void testCheckPathWithinBounds() {
+
+        DefaultTemplate.checkPathWithinBounds("t.txt");
+        DefaultTemplate.checkPathWithinBounds("e/t.txt");
+        DefaultTemplate.checkPathWithinBounds("/t.txt");
+        DefaultTemplate.checkPathWithinBounds("/a/../b/../t.txt");
+
+        assertThrows(RuntimeException.class, () -> DefaultTemplate.checkPathWithinBounds("../t.txt"));
+        assertThrows(RuntimeException.class, () -> DefaultTemplate.checkPathWithinBounds("/../a/t.txt"));
+    }
 }

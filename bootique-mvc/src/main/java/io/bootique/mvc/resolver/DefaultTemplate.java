@@ -25,33 +25,30 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
- * A template implementation that resolves template locations relative to the template base. The root URL as well
- * as URLs for relative resource names are first prepended with the package name of the specified view Java type
- * before resolving against the base.
+ * A template implementation that resolves template resources relative the template base. The root URL as well
+ * as URLs of relative resource names are first prepended with the specified path before resolving against the base.
  *
  * @since 3.0
  */
-public class ViewTemplate implements Template {
+public class DefaultTemplate implements Template {
 
-    private final String templateName;
-    private final FolderResourceFactory templateBase;
-    private final Charset templateEncoding;
-    private final String packagePath;
+    private final FolderResourceFactory base;
+    private final String path;
+    private final String name;
+    private final Charset sourceEncoding;
 
     private volatile URL url;
 
-    public ViewTemplate(
-            String templateName,
-            Class<?> viewType,
-            FolderResourceFactory templateBase,
-            Charset templateEncoding) {
+    public DefaultTemplate(
+            FolderResourceFactory base,
+            String path,
+            String name,
+            Charset sourceEncoding) {
 
-        this.templateName = templateName;
-        this.templateBase = templateBase;
-        this.templateEncoding = templateEncoding;
-
-        Package pack = viewType.getPackage();
-        this.packagePath = pack != null ? pack.getName().replace('.', '/') + "/" : "";
+        this.name = name;
+        this.base = base;
+        this.sourceEncoding = sourceEncoding;
+        this.path = path;
     }
 
     @Override
@@ -59,8 +56,8 @@ public class ViewTemplate implements Template {
 
         // No synchronization. No harm if the URL is resolved multiple times in parallel
         if (url == null) {
-            String path = resourcePath(templateName);
-            this.url = templateBase.getUrl(path);
+            String path = resourcePath(name);
+            this.url = base.getUrl(path);
         }
 
         return url;
@@ -69,17 +66,17 @@ public class ViewTemplate implements Template {
     @Override
     public URL getUrl(String resourceName) {
         String path = resourcePath(resourceName);
-        return templateBase.getUrl(path);
+        return base.getUrl(path);
     }
 
     @Override
     public Charset getEncoding() {
-        return templateEncoding;
+        return sourceEncoding;
     }
 
     @Override
     public String getName() {
-        return templateName;
+        return name;
     }
 
     protected String resourcePath(String resource) {
@@ -89,13 +86,13 @@ public class ViewTemplate implements Template {
 
         String path = resource.startsWith("/")
                 ? resource
-                : packagePath + resource;
+                : this.path + resource;
 
         checkPathWithinBounds(path);
         return path;
     }
 
-    protected void checkPathWithinBounds(String resourcePath) {
+    protected static void checkPathWithinBounds(String resourcePath) {
 
         if (resourcePath.length() < 2) {
             return;

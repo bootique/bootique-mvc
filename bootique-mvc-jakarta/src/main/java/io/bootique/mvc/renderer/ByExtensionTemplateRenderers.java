@@ -19,16 +19,16 @@
 
 package io.bootique.mvc.renderer;
 
-import java.util.Map;
-
 import io.bootique.mvc.Template;
 
-public class ByExtensionTemplateRendererFactory implements TemplateRendererFactory {
+import java.util.Map;
 
-	private Map<String, TemplateRenderer> renderersByExtension;
+public class ByExtensionTemplateRenderers implements TemplateRenderers {
 
-	public ByExtensionTemplateRendererFactory(Map<String, TemplateRenderer> renderersByExtension) {
-		// expecting . to be present in extension names...
+	private final Map<String, TemplateRenderer> renderersByExtension;
+
+	public ByExtensionTemplateRenderers(Map<String, TemplateRenderer> renderersByExtension) {
+		// expecting each extension in the map to start with "."
 		this.renderersByExtension = renderersByExtension;
 	}
 
@@ -37,7 +37,9 @@ public class ByExtensionTemplateRendererFactory implements TemplateRendererFacto
 		String ext = getExtension(template.getName());
 		TemplateRenderer renderer = renderersByExtension.get(ext);
 		if (renderer == null) {
-			throw new IllegalArgumentException("Unsupported template extension: " + ext + ", supported extensions: "
+			throw new IllegalArgumentException("Unsupported template extension: "
+					+ ext
+					+ ", supported extensions: "
 					+ renderersByExtension.keySet());
 		}
 

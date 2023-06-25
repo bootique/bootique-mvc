@@ -35,11 +35,13 @@ import java.net.URL;
 
 class FreemarkerIntegrationService {
 
-    private Configuration cfg = new Configuration(Configuration.getVersion());
+    private final Configuration config;
 
     @Inject
     public FreemarkerIntegrationService() {
-        cfg.setTemplateLoader(new URLTemplateLoader() {
+        this.config = new Configuration(Configuration.getVersion());
+
+        this.config.setTemplateLoader(new URLTemplateLoader() {
             @Override
             protected URL getURL(String name) {
                 try {
@@ -49,22 +51,24 @@ class FreemarkerIntegrationService {
                 }
             }
         });
-        cfg.setTemplateLookupStrategy(new TemplateLookupStrategy() {
+        this.config.setTemplateLookupStrategy(new TemplateLookupStrategy() {
             @Override
             public TemplateLookupResult lookup(TemplateLookupContext templateLookupContext) throws IOException {
-                // root template, can be different from template we currently lookup (e.g. in case of #include directive)
-                io.bootique.mvc.Template bqTemplate = (io.bootique.mvc.Template)templateLookupContext
+
+                // root template, can be different from the template we currently look up
+                // (e.g. in case of #include directive)
+                io.bootique.mvc.Template bqTemplate = (io.bootique.mvc.Template) templateLookupContext
                         .getCustomLookupCondition();
                 URL templateUrl = bqTemplate.getUrl(templateLookupContext.getTemplateName());
                 return templateLookupContext.lookupWithAcquisitionStrategy(templateUrl.toString());
             }
         });
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
+        this.config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        this.config.setLogTemplateExceptions(false);
     }
 
     Template getTemplate(io.bootique.mvc.Template bqTemplate) throws IOException {
-        return cfg.getTemplate(
+        return config.getTemplate(
                 bqTemplate.getName(),
                 null,
                 bqTemplate,

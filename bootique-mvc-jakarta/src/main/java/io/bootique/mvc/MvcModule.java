@@ -24,9 +24,9 @@ import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.jersey.JerseyModule;
-import io.bootique.mvc.renderer.ByExtensionTemplateRendererFactory;
+import io.bootique.mvc.renderer.ByExtensionTemplateRenderers;
 import io.bootique.mvc.renderer.TemplateRenderer;
-import io.bootique.mvc.renderer.TemplateRendererFactory;
+import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
 import io.bootique.mvc.resolver.TemplateResolverFactory;
 
@@ -54,14 +54,14 @@ public class MvcModule extends ConfigModule {
 
     @Singleton
     @Provides
-    MvcFeature createMvcFeature(TemplateResolver templateResolver, TemplateRendererFactory templateRendererFactory) {
-        return new MvcFeature(templateResolver, templateRendererFactory);
+    MvcFeature createMvcFeature(TemplateResolver templateResolver, TemplateRenderers templateRenderers) {
+        return new MvcFeature(templateResolver, templateRenderers);
     }
 
     @Singleton
     @Provides
-    TemplateRendererFactory createTemplateRendererFactory(Map<String, TemplateRenderer> renderersByExtension) {
-        return new ByExtensionTemplateRendererFactory(renderersByExtension);
+    TemplateRenderers createTemplateRendererFactory(Map<String, TemplateRenderer> renderersByExtension) {
+        return new ByExtensionTemplateRenderers(renderersByExtension);
     }
 
     @Singleton

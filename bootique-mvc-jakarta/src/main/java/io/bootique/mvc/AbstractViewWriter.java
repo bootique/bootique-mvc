@@ -19,7 +19,7 @@
 
 package io.bootique.mvc;
 
-import io.bootique.mvc.renderer.TemplateRendererFactory;
+import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -35,11 +35,11 @@ import java.lang.reflect.Type;
 public class AbstractViewWriter implements MessageBodyWriter<AbstractView> {
 
     private final TemplateResolver templateResolver;
-    private final TemplateRendererFactory templateRendererFactory;
+    private final TemplateRenderers templateRenderers;
 
-    public AbstractViewWriter(TemplateResolver templateResolver, TemplateRendererFactory templateRendererFactory) {
+    public AbstractViewWriter(TemplateResolver templateResolver, TemplateRenderers templateRenderers) {
         this.templateResolver = templateResolver;
-        this.templateRendererFactory = templateRendererFactory;
+        this.templateRenderers = templateRenderers;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class AbstractViewWriter implements MessageBodyWriter<AbstractView> {
 
         Writer out = new OutputStreamWriter(entityStream, t.getEncoding());
         Template template = templateResolver.resolve(t.getTemplateName(), t.getClass());
-        templateRendererFactory.getRenderer(template).render(out, template, t);
+        templateRenderers.getRenderer(template).render(out, template, t);
 
         // flush but do not close the underlying stream
         out.flush();
