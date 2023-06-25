@@ -24,16 +24,22 @@ import java.time.Duration;
 import java.util.function.Function;
 
 /**
- * An unbounded cache with entry TTL used to store provider-specific templates.
+ * A cache to store provider-specific templates.
  *
  * @since 3.0
  */
 public interface RenderableTemplateCache {
 
+    /**
+     * Creates a dummy cache that does not store anything and reloads entries on every call.
+     */
     static RenderableTemplateCache ofNoCache() {
         return new NoCache();
     }
 
+    /**
+     * Creates an unbounded cache with the specified entry TTL.
+     */
     static RenderableTemplateCache of(Duration ttl) {
         return new TtlCache(ttl.toMillis());
     }
