@@ -21,10 +21,6 @@ package io.bootique.mvc;
 
 import io.bootique.mvc.renderer.TemplateRendererFactory;
 import io.bootique.mvc.resolver.TemplateResolver;
-import jakarta.inject.Provider;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.container.ResourceInfo;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.MessageBodyWriter;
@@ -35,49 +31,44 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Objects;
 
 public class AbstractViewWriter implements MessageBodyWriter<AbstractView> {
 
-	private TemplateResolver templateResolver;
-	private TemplateRendererFactory templateRendererFactory;
+    private final TemplateResolver templateResolver;
+    private final TemplateRendererFactory templateRendererFactory;
 
-	// TODO dirty ... other properties are set in constructor, but this one
-	// awaits injection. So the object is in a partial state for the part of its
-	// lifecycle...
-	@Context
-	private Provider<ResourceInfo> resourceInfoProvider;
+    public AbstractViewWriter(TemplateResolver templateResolver, TemplateRendererFactory templateRendererFactory) {
+        this.templateResolver = templateResolver;
+        this.templateRendererFactory = templateRendererFactory;
+    }
 
-	public AbstractViewWriter(TemplateResolver templateResolver, TemplateRendererFactory templateRendererFactory) {
-		this.templateResolver = templateResolver;
-		this.templateRendererFactory = templateRendererFactory;
-	}
+    @Override
+    public long getSize(AbstractView t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+        return -1;
+    }
 
-	@Override
-	public long getSize(AbstractView t, Class<?> type, Type genericType, Annotation[] annotations,
-			MediaType mediaType) {
-		return -1;
-	}
+    @Override
+    public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+        return AbstractView.class.isAssignableFrom(type);
+    }
 
-	@Override
-	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-		return AbstractView.class.isAssignableFrom(type);
-	}
+    @Override
+    public void writeTo(
+            AbstractView t,
+            Class<?> type,
+            Type genericType,
+            Annotation[] annotations,
+            MediaType mediaType,
+            MultivaluedMap<String, Object> httpHeaders,
+            OutputStream entityStream)
+            throws IOException {
 
-	@Override
-	public void writeTo(AbstractView t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType,
-						MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
-					throws IOException, WebApplicationException {
+        Writer out = new OutputStreamWriter(entityStream, t.getEncoding());
+        Template template = templateResolver.resolve(t.getTemplateName(), t.getClass());
+        templateRendererFactory.getRenderer(template).render(out, template, t);
 
-		// doublecheck injection....
-		Objects.requireNonNull(resourceInfoProvider, "'resourceInfoProvider' was not injected");
-
-		Writer out = new OutputStreamWriter(entityStream, t.getEncoding());
-		Template template = templateResolver.resolve(t.getTemplateName(), t.getClass());
-		templateRendererFactory.getRenderer(template).render(out, template, t);
-
-		// flush but do not close the underlying stream
-		out.flush();
-	}
+        // flush but do not close the underlying stream
+        out.flush();
+    }
 
 }

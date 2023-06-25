@@ -19,19 +19,30 @@
 
 package io.bootique.mvc.mustache;
 
+import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+import com.github.mustachejava.MustacheResolver;
 import io.bootique.mvc.Template;
 import io.bootique.mvc.renderer.TemplateRenderer;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
+import java.util.Objects;
 
+/**
+ * A template renderer that locates child templates based on the location of the root template.
+ */
 public class MustacheTemplateRenderer implements TemplateRenderer {
 
-    private final ContextAwareMustacheFactory mustacheFactory;
+    // we have to resort to the ugly ThreadLocal approach due to the lack of rendering context in Mustache Java library
+    private final ThreadLocal<Template> templateContext;
+    private final MustacheFactory mustacheFactory;
 
     public MustacheTemplateRenderer() {
-        this.mustacheFactory = new ContextAwareMustacheFactory();
+        this.templateContext = new ThreadLocal<>();
+        this.mustacheFactory = new DefaultMustacheFactory(new ContextAwareMustacheResolver());
     }
 
     @Override
@@ -39,7 +50,42 @@ public class MustacheTemplateRenderer implements TemplateRenderer {
 
         // TODO: cache templates...
 
-        Mustache mustache = mustacheFactory.compile(template);
+        Mustache mustache = compile(template);
         mustache.execute(out, rootModel).flush();
+    }
+
+    /**
+     * Encapsulates context-aware Mustache template compilation logic.
+     */
+    protected Mustache compile(Template template) {
+
+        startContext(template);
+        try {
+            // presumably Mustache closes the reader on its own...
+            Reader reader = template.reader();
+            return mustacheFactory.compile(reader, template.getName());
+        } finally {
+            endContext();
+        }
+    }
+
+    private void startContext(Template template) {
+        templateContext.set(template);
+    }
+
+    private void endContext() {
+        templateContext.set(null);
+    }
+
+    class ContextAwareMustacheResolver implements MustacheResolver {
+
+        @Override
+        public Reader getReader(String resourceName) {
+            Template template = Objects.requireNonNull(
+                    templateContext.get(),
+                    "No root template, called outside of compilation context");
+            
+            return template.reader(resourceName);
+        }
     }
 }
