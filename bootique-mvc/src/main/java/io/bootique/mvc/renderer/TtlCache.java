@@ -20,6 +20,7 @@ package io.bootique.mvc.renderer;
 
 import io.bootique.mvc.Template;
 
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
@@ -68,7 +69,7 @@ class TtlCache implements RenderableTemplateCache {
                     // the template while we were waiting.
 
                     if (e >= this.expiresOn) {
-                        this.value = renderedTemplateMaker.apply(template);
+                        this.value = Objects.requireNonNull(renderedTemplateMaker.apply(template));
                         this.expiresOn = System.currentTimeMillis() + ttlMs;
                     }
 
