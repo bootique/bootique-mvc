@@ -164,7 +164,7 @@ public class DefaultTemplateResolverTest {
 
         URL expected = baseClasspathUrl("rootName.txt");
         assertEquals(expected, resolver.resolve("/rootName.txt", DefaultTemplateResolverTest.class).getUrl(),
-                () -> "Expected root resource regardless of the view class");
+                "Expected root resource regardless of the view class");
     }
 
     @Test
