@@ -54,7 +54,7 @@ public class DefaultTemplate implements Template {
     @Override
     public URL getUrl() {
 
-        // No synchronization. No harm if the URL is resolved multiple times in parallel
+        // No synchronization. No harm if the URL is resolved multiple times if called concurrently the first time
         if (url == null) {
             String path = resourcePath(name);
             this.url = base.getUrl(path);
@@ -65,6 +65,9 @@ public class DefaultTemplate implements Template {
 
     @Override
     public URL getUrl(String resourceName) {
+
+        // TODO: does it make sense to cache subresource URLs?
+
         String path = resourcePath(resourceName);
         return base.getUrl(path);
     }

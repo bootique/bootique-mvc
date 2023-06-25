@@ -2,6 +2,7 @@
 
 * #24 Mustache templates for "partials" should resolve against "templateBase"
 * #25 Unified template resolving mechanism
+* #26 Cache template pointers
 
 ## 3.0.M1
 

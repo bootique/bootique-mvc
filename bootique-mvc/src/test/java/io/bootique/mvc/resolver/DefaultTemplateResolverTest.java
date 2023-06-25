@@ -19,6 +19,8 @@
 
 package io.bootique.mvc.resolver;
 
+import io.bootique.mvc.MvcModule;
+import io.bootique.mvc.Template;
 import io.bootique.resource.FolderResourceFactory;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +37,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DefaultTemplateResolverTest {
 
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+
+    @Test
+    public void testResolve_Caching() {
+        DefaultTemplateResolver resolver = resolver("/tmp");
+
+        Template t1 = resolver.resolve("tName.txt", DefaultTemplateResolver.class);
+        assertNotNull(t1);
+
+        assertSame(t1, resolver.resolve("tName.txt", DefaultTemplateResolver.class));
+
+        assertNotSame(t1, resolver.resolve("tName.txt", MvcModule.class));
+        assertNotSame(t1, resolver.resolve("a/tName.txt", DefaultTemplateResolver.class));
+        assertNotSame(t1, resolver.resolve("tName.md", DefaultTemplateResolver.class));
+
+        Template t2 = resolver.resolve("tName.txt", MvcModule.class);
+        assertSame(t2, resolver.resolve("tName.txt", MvcModule.class));
+    }
 
     @Test
     public void testResolve_EmptyBase() throws MalformedURLException {

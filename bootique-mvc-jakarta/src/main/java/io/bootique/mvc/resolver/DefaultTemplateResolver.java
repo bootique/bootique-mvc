@@ -24,27 +24,35 @@ import io.bootique.resource.FolderResourceFactory;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class DefaultTemplateResolver implements TemplateResolver {
 
     private final Charset templateEncoding;
     private final FolderResourceFactory templateBase;
-
+    private final ConcurrentMap<String, Template> cachedTemplates;
 
     public DefaultTemplateResolver(FolderResourceFactory templateBase, Charset templateEncoding) {
         this.templateBase = templateBase;
         this.templateEncoding = Objects.requireNonNull(templateEncoding, "Null templateEncoding");
+        this.cachedTemplates = new ConcurrentHashMap<>();
     }
 
     @Override
     public Template resolve(String templateName, Class<?> viewType) {
 
-        // Bootique MVC template is just a URL resolver. So no need to cache it.
-        // Actual templates may be cached by rendering engine providers in provider-specific way
-
         Package pkg = viewType.getPackage();
-        String path = pkg != null ? pkg.getName().replace('.', '/') + "/" : "";
 
+        // the key is not the same as template path. It is simply the cheapest unique String
+        // we can produce for name and package name
+        String key = pkg != null ? pkg.getName() + templateName : templateName;
+
+        return cachedTemplates.computeIfAbsent(key, k -> createTemplate(templateName, pkg));
+    }
+
+    private Template createTemplate(String templateName, Package pkg) {
+        String path = pkg != null ? pkg.getName().replace('.', '/') + "/" : "";
         return new DefaultTemplate(templateBase, path, templateName, templateEncoding);
     }
 }
