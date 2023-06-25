@@ -47,8 +47,8 @@ public class DefaultTemplate implements Template {
 
         this.name = name;
         this.base = base;
-        this.sourceEncoding = sourceEncoding;
         this.path = path;
+        this.sourceEncoding = sourceEncoding;
     }
 
     @Override

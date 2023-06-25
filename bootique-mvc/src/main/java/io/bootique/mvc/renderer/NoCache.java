@@ -16,27 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package io.bootique.mvc.renderer;
 
-package io.bootique.mvc.mustache;
+import io.bootique.mvc.Template;
 
-import io.bootique.ConfigModule;
-import io.bootique.di.Binder;
-import io.bootique.di.Provides;
-import io.bootique.mvc.MvcModule;
-import io.bootique.mvc.renderer.RenderableTemplateCache;
+import java.util.function.Function;
 
-import javax.inject.Singleton;
-
-public class MvcMustacheModule extends ConfigModule {
+class NoCache implements RenderableTemplateCache {
 
     @Override
-    public void configure(Binder binder) {
-        MvcModule.extend(binder).setRenderer(".mustache", MustacheTemplateRenderer.class);
-    }
-
-    @Provides
-    @Singleton
-    MustacheTemplateRenderer provideTemplateRenderer(RenderableTemplateCache cache) {
-        return new MustacheTemplateRenderer(cache);
+    public <T> T get(Template template, Function<Template, T> renderedTemplateMaker) {
+        return renderedTemplateMaker.apply(template);
     }
 }

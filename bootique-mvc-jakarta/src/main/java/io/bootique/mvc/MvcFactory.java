@@ -17,24 +17,38 @@
  * under the License.
  */
 
-package io.bootique.mvc.resolver;
+package io.bootique.mvc;
 
 import io.bootique.annotation.BQConfig;
 import io.bootique.annotation.BQConfigProperty;
+import io.bootique.mvc.renderer.RenderableTemplateCache;
+import io.bootique.mvc.resolver.DefaultTemplateResolver;
 import io.bootique.resource.FolderResourceFactory;
+import io.bootique.value.Duration;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
 
-@BQConfig("Configures MVC template resolver.")
-public class TemplateResolverFactory {
+@BQConfig("Configures MVC services")
+public class MvcFactory {
 
     private FolderResourceFactory templateBase;
     private Charset templateEncoding;
+    private Duration templateTtl;
 
-    public TemplateResolverFactory() {
+    public MvcFactory() {
         this.templateBase = new FolderResourceFactory("");
         this.templateEncoding = Charset.forName("UTF-8");
+    }
+
+    public RenderableTemplateCache createRenderableTemplateCache() {
+        return templateTtl != null
+                ? RenderableTemplateCache.of(templateTtl.getDuration())
+                : RenderableTemplateCache.ofNoCache();
+    }
+
+    public DefaultTemplateResolver createResolver() {
+        return new DefaultTemplateResolver(templateBase, templateEncoding);
     }
 
     /**
@@ -66,7 +80,12 @@ public class TemplateResolverFactory {
         this.templateEncoding = Charset.forName(Objects.requireNonNull(templateEncoding));
     }
 
-    public DefaultTemplateResolver createResolver() {
-        return new DefaultTemplateResolver(templateBase, templateEncoding);
+    /**
+     * @since 3.0
+     */
+    @BQConfigProperty("Sets template reload time interval. This controls template caching." +
+            " By default is not set to anything, causing template reloading on every call")
+    public void setTemplateTtl(Duration templateTtl) {
+        this.templateTtl = templateTtl;
     }
 }

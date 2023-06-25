@@ -23,7 +23,6 @@ import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
 import io.bootique.di.BQModule;
 import io.bootique.jersey.JerseyModuleProvider;
-import io.bootique.mvc.resolver.TemplateResolverFactory;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -42,7 +41,7 @@ public class MvcModuleProvider implements BQModuleProvider {
     public Map<String, Type> configs() {
         // TODO: config prefix is hardcoded. Refactor away from ConfigModule, and make provider
         // generate config prefix, reusing it in metadata...
-        return Collections.singletonMap("mvc", TemplateResolverFactory.class);
+        return Collections.singletonMap("mvc", MvcFactory.class);
     }
 
     @Override

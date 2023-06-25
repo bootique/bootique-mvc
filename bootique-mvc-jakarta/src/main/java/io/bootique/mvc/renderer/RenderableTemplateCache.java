@@ -16,27 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package io.bootique.mvc.renderer;
 
-package io.bootique.mvc.mustache;
+import io.bootique.mvc.Template;
 
-import io.bootique.ConfigModule;
-import io.bootique.di.Binder;
-import io.bootique.di.Provides;
-import io.bootique.mvc.MvcModule;
-import io.bootique.mvc.renderer.RenderableTemplateCache;
+import java.time.Duration;
+import java.util.function.Function;
 
-import javax.inject.Singleton;
+/**
+ * An unbounded cache with entry TTL used to store provider-specific templates.
+ *
+ * @since 3.0
+ */
+public interface RenderableTemplateCache {
 
-public class MvcMustacheModule extends ConfigModule {
-
-    @Override
-    public void configure(Binder binder) {
-        MvcModule.extend(binder).setRenderer(".mustache", MustacheTemplateRenderer.class);
+    static RenderableTemplateCache ofNoCache() {
+        return new NoCache();
     }
 
-    @Provides
-    @Singleton
-    MustacheTemplateRenderer provideTemplateRenderer(RenderableTemplateCache cache) {
-        return new MustacheTemplateRenderer(cache);
+    static RenderableTemplateCache of(Duration ttl) {
+        return new TtlCache(ttl.toMillis());
     }
+
+    <T> T get(Template template, Function<Template, T> renderedTemplateMaker);
 }

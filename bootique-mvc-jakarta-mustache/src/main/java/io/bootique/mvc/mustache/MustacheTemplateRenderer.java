@@ -24,6 +24,7 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.github.mustachejava.MustacheResolver;
 import io.bootique.mvc.Template;
+import io.bootique.mvc.renderer.RenderableTemplateCache;
 import io.bootique.mvc.renderer.TemplateRenderer;
 
 import java.io.IOException;
@@ -36,21 +37,22 @@ import java.util.Objects;
  */
 public class MustacheTemplateRenderer implements TemplateRenderer {
 
+    private final RenderableTemplateCache templateCache;
+
     // we have to resort to the ugly ThreadLocal approach due to the lack of rendering context in Mustache Java library
     private final ThreadLocal<Template> templateContext;
     private final MustacheFactory mustacheFactory;
 
-    public MustacheTemplateRenderer() {
+    public MustacheTemplateRenderer(RenderableTemplateCache templateCache) {
+        this.templateCache = templateCache;
+
         this.templateContext = new ThreadLocal<>();
         this.mustacheFactory = new DefaultMustacheFactory(new ContextAwareMustacheResolver());
     }
 
     @Override
     public void render(Writer out, Template template, Object rootModel) throws IOException {
-
-        // TODO: cache templates...
-
-        Mustache mustache = compile(template);
+        Mustache mustache = templateCache.get(template, this::compile);
         mustache.execute(out, rootModel).flush();
     }
 

@@ -32,8 +32,6 @@ public interface Template {
 
     String getName();
 
-    Charset getEncoding();
-
     /**
      * Returns a URL of this template
      */
@@ -68,4 +66,6 @@ public interface Template {
             throw new RuntimeException("Error opening URL: " + url, e);
         }
     }
+
+    Charset getEncoding();
 }

@@ -21,13 +21,22 @@ package io.bootique.mvc.mustache;
 
 import io.bootique.ConfigModule;
 import io.bootique.di.Binder;
+import io.bootique.di.Provides;
 import io.bootique.mvc.MvcModule;
+import io.bootique.mvc.renderer.RenderableTemplateCache;
+
+import javax.inject.Singleton;
 
 public class MvcMustacheModule extends ConfigModule {
 
-	@Override
-	public void configure(Binder binder) {
-		MvcModule.extend(binder).setRenderer(".mustache", MustacheTemplateRenderer.class);
-	}
+    @Override
+    public void configure(Binder binder) {
+        MvcModule.extend(binder).setRenderer(".mustache", MustacheTemplateRenderer.class);
+    }
 
+    @Provides
+    @Singleton
+    MustacheTemplateRenderer provideTemplateRenderer(RenderableTemplateCache cache) {
+        return new MustacheTemplateRenderer(cache);
+    }
 }

@@ -25,10 +25,10 @@ import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.mvc.renderer.ByExtensionTemplateRenderers;
+import io.bootique.mvc.renderer.RenderableTemplateCache;
 import io.bootique.mvc.renderer.TemplateRenderer;
 import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
-import io.bootique.mvc.resolver.TemplateResolverFactory;
 
 import javax.inject.Singleton;
 import java.util.Map;
@@ -67,6 +67,12 @@ public class MvcModule extends ConfigModule {
     @Singleton
     @Provides
     TemplateResolver createTemplateResolver(ConfigurationFactory configFactory) {
-        return config(TemplateResolverFactory.class, configFactory).createResolver();
+        return config(MvcFactory.class, configFactory).createResolver();
+    }
+
+    @Singleton
+    @Provides
+    RenderableTemplateCache createRenderableTemplateCache(ConfigurationFactory configFactory) {
+        return config(MvcFactory.class, configFactory).createRenderableTemplateCache();
     }
 }
