@@ -57,25 +57,44 @@ class TtlCache implements RenderableTemplateCache {
             this.lock = new ReentrantLock();
         }
 
-        <T> T updateIfNeeded(Template template, Function<Template, T> renderedTemplateMaker) {
+        <T> T updateIfNeeded(Template t, Function<Template, T> tMaker) {
+            long expiredOn = this.expiresOn;
+            return expiredOn >= System.currentTimeMillis()
+                    ? (T) value
+                    // we must wait on the first update, but after that we can reuse a stale template
+                    : value != null ? updateIfCanLock(expiredOn, t, tMaker) : update(expiredOn, t, tMaker);
+        }
 
-            long e = this.expiresOn;
-            if (e < System.currentTimeMillis()) {
+        private <T> T update(long expiredOn, Template t, Function<Template, T> tMaker) {
 
-                lock.lock();
-                try {
+            lock.lock();
 
-                    // Save a call to System.currentTimeMillis(), instead see if someone else already updated
-                    // the template while we were waiting.
+            try {
+                return updateNoLocks(expiredOn, t, tMaker);
+            } finally {
+                lock.unlock();
+            }
+        }
 
-                    if (e >= this.expiresOn) {
-                        this.value = Objects.requireNonNull(renderedTemplateMaker.apply(template));
-                        this.expiresOn = System.currentTimeMillis() + ttlMs;
-                    }
+        private <T> T updateIfCanLock(long expiredOn, Template t, Function<Template, T> tMaker) {
 
-                } finally {
-                    lock.unlock();
-                }
+            if (!lock.tryLock()) {
+                return (T) value;
+            }
+
+            try {
+                return updateNoLocks(expiredOn, t, tMaker);
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        private <T> T updateNoLocks(long expiredOn, Template t, Function<Template, T> tMaker) {
+
+            // if no one else updated the template while we were getting the lock
+            if (expiredOn == this.expiresOn) {
+                this.value = Objects.requireNonNull(tMaker.apply(t));
+                this.expiresOn = System.currentTimeMillis() + ttlMs;
             }
 
             return (T) value;
