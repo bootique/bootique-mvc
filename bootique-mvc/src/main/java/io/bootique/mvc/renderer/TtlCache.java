@@ -62,10 +62,10 @@ class TtlCache implements RenderableTemplateCache {
             return expiredOn >= System.currentTimeMillis()
                     ? (T) value
                     // we must wait on the first update, but after that we can reuse a stale template
-                    : value != null ? updateIfCanLock(expiredOn, t, tMaker) : update(expiredOn, t, tMaker);
+                    : value != null ? updateTryLock(expiredOn, t, tMaker) : updateLock(expiredOn, t, tMaker);
         }
 
-        private <T> T update(long expiredOn, Template t, Function<Template, T> tMaker) {
+        private <T> T updateLock(long expiredOn, Template t, Function<Template, T> tMaker) {
 
             lock.lock();
 
@@ -76,7 +76,7 @@ class TtlCache implements RenderableTemplateCache {
             }
         }
 
-        private <T> T updateIfCanLock(long expiredOn, Template t, Function<Template, T> tMaker) {
+        private <T> T updateTryLock(long expiredOn, Template t, Function<Template, T> tMaker) {
 
             if (!lock.tryLock()) {
                 return (T) value;
