@@ -35,7 +35,7 @@ import static org.mockito.Mockito.when;
 public class TtlCacheTest {
 
     @Test
-    public void testConcurrentAccess() throws MalformedURLException {
+    public void concurrentAccess() throws MalformedURLException {
 
         TtlCache cache = new TtlCache(20);
 

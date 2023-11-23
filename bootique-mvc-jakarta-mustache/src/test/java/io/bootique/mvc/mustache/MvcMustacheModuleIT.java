@@ -53,14 +53,14 @@ public class MvcMustacheModuleIT {
             .createRuntime();
 
     @Test
-    public void testV1() {
+    public void v1() {
         Response r1 = jetty.getTarget().path("/v1").request().get();
         assertEquals(Response.Status.OK.getStatusCode(), r1.getStatus());
         assertEquals("\nv1_string_p1_number_564", r1.readEntity(String.class));
     }
 
     @Test
-    public void testV2() {
+    public void v2() {
         Response r1 = jetty.getTarget().path("/v2").request().get();
         assertEquals(Response.Status.OK.getStatusCode(), r1.getStatus());
         assertEquals("\nv2_string_p2_number_5649", r1.readEntity(String.class));

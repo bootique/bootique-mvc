@@ -35,26 +35,26 @@ public class DefaultTemplateResolver_JailbreakTest {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     @Test
-    public void testResolve_FilePathBase() {
+    public void resolve_FilePathBase() {
         assertResolve("/tmp/a/b", "../tName.txt", new File("/tmp/a/b/io/bootique/mvc/tName.txt"));
         assertResolve("/tmp/a/b", "../../../../tName.txt", new File("/tmp/a/b/tName.txt"));
         assertResolve("/tmp/a/b", "../../x/tName.txt", new File("/tmp/a/b/io/bootique/x/tName.txt"));
     }
 
     @Test
-    public void testResolve_FilePathBase_Absolute() {
+    public void resolve_FilePathBase_Absolute() {
         assertResolve("/tmp/a/b", "../tName.txt", new File("/tmp/a/b/io/bootique/mvc/tName.txt"));
         assertResolve("/tmp/a/b", "../../../../tName.txt", new File("/tmp/a/b/tName.txt"));
         assertResolve("/tmp/a/b", "/x/y/../tName.txt", new File("/tmp/a/b/x/tName.txt"));
     }
 
     @Test
-    public void testResolve_FilePathBase_DisallowCrossingRoot() {
+    public void resolve_FilePathBase_DisallowCrossingRoot() {
         assertBadPath("/tmp/a/b", "../../../../../tName.txt");
     }
 
     @Test
-    public void testResolve_FilePathBase_DisallowCrossingRoot_Absolute() {
+    public void resolve_FilePathBase_DisallowCrossingRoot_Absolute() {
         assertBadPath("/tmp/a/b", "/x/../../tName.txt");
     }
 

@@ -48,7 +48,7 @@ public class MustacheTemplateRenderer_TemplateTtlIT {
     static BQTestFactory factory = new BQTestFactory();
 
     @Test
-    public void testDefault_NoCache(@TempDir Path tempDir) {
+    public void default_NoCache(@TempDir Path tempDir) {
 
         BQRuntime runtime = factory.app()
                 .autoLoadModules()
@@ -71,7 +71,7 @@ public class MustacheTemplateRenderer_TemplateTtlIT {
     }
 
     @Test
-    public void testTtl(@TempDir Path tempDir) throws InterruptedException {
+    public void ttl(@TempDir Path tempDir) throws InterruptedException {
 
         BQRuntime runtime = factory.app()
                 .autoLoadModules()

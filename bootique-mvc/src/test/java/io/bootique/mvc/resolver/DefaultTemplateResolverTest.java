@@ -39,7 +39,7 @@ public class DefaultTemplateResolverTest {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     @Test
-    public void testResolve_Caching() {
+    public void resolve_Caching() {
         DefaultTemplateResolver resolver = resolver("/tmp");
 
         Template t1 = resolver.resolve("tName.txt", DefaultTemplateResolver.class);
@@ -56,7 +56,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_EmptyBase() throws MalformedURLException {
+    public void resolve_EmptyBase() throws MalformedURLException {
 
         DefaultTemplateResolver resolver = resolver("");
 
@@ -65,7 +65,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_EmptyBase_Absolute() throws MalformedURLException {
+    public void resolve_EmptyBase_Absolute() throws MalformedURLException {
 
         DefaultTemplateResolver resolver = resolver("");
         URL expected = baseUrl("/tName.txt");
@@ -73,7 +73,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_FilePathBase() throws IOException {
+    public void resolve_FilePathBase() throws IOException {
 
         DefaultTemplateResolver resolver = resolver("/tmp");
 
@@ -84,7 +84,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_FilePathBase_Absolute() throws IOException {
+    public void resolve_FilePathBase_Absolute() throws IOException {
 
         DefaultTemplateResolver resolver = resolver("/tmp");
 
@@ -95,7 +95,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_FilePathBase_Slash() throws IOException {
+    public void resolve_FilePathBase_Slash() throws IOException {
 
         DefaultTemplateResolver resolver = resolver("/tmp/");
         File canonical = new File("/tmp/io/bootique/mvc/resolver/tName.txt").getCanonicalFile();
@@ -105,7 +105,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_FilePathBase_Slash_Absolute() throws IOException {
+    public void resolve_FilePathBase_Slash_Absolute() throws IOException {
 
         DefaultTemplateResolver resolver = resolver("/tmp/");
         File canonical = new File("/tmp/tName.txt").getCanonicalFile();
@@ -115,7 +115,7 @@ public class DefaultTemplateResolverTest {
 
 
     @Test
-    public void testResolve_UrlBase() {
+    public void resolve_UrlBase() {
 
         DefaultTemplateResolver resolver = resolver("http://example.org/a");
 
@@ -124,7 +124,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_UrlBase_Absolute() {
+    public void resolve_UrlBase_Absolute() {
 
         DefaultTemplateResolver resolver = resolver("http://example.org/a");
         assertEquals("http://example.org/a/tName.txt",
@@ -132,7 +132,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_UrlBase_Slash() {
+    public void resolve_UrlBase_Slash() {
 
         DefaultTemplateResolver resolver = resolver("http://example.org/a/");
 
@@ -141,7 +141,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_UrlBase_Slash_Absolute() {
+    public void resolve_UrlBase_Slash_Absolute() {
 
         DefaultTemplateResolver resolver = resolver("http://example.org/a/");
         assertEquals("http://example.org/a/tName.txt",
@@ -149,7 +149,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_ClasspathBase() throws MalformedURLException {
+    public void resolve_ClasspathBase() throws MalformedURLException {
 
         DefaultTemplateResolver resolver = resolver("classpath:");
 
@@ -158,7 +158,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_ClasspathBase_Absolute() throws MalformedURLException {
+    public void resolve_ClasspathBase_Absolute() throws MalformedURLException {
 
         DefaultTemplateResolver resolver = resolver("classpath:");
 
@@ -168,7 +168,7 @@ public class DefaultTemplateResolverTest {
     }
 
     @Test
-    public void testResolve_ClasspathBase_Slash() throws MalformedURLException {
+    public void resolve_ClasspathBase_Slash() throws MalformedURLException {
         DefaultTemplateResolver resolver = resolver("classpath:/");
         assertEquals(baseClasspathUrl("io/bootique/mvc/resolver/tName.txt"),
                 resolver.resolve("tName.txt", DefaultTemplateResolverTest.class).getUrl());

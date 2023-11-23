@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class DefaultTemplateTest {
 
     @Test
-    public void testCheckPathWithinBounds() {
+    public void checkPathWithinBounds() {
 
         DefaultTemplate.checkPathWithinBounds("t.txt");
         DefaultTemplate.checkPathWithinBounds("e/t.txt");
