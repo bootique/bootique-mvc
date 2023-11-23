@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 public class MvcFreemarkerModuleProviderTest {
 
 	@Test
-	public void testPresentInJar() {
+    public void presentInJar() {
 		BQModuleProviderChecker.testAutoLoadable(MvcFreemarkerModuleProvider.class);
 	}
 }
