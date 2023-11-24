@@ -19,36 +19,22 @@
 
 package io.bootique.mvc;
 
-import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
-import io.bootique.di.BQModule;
+import io.bootique.bootstrap.BuiltModule;
 import io.bootique.jersey.JerseyModuleProvider;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 
 public class MvcModuleProvider implements BQModuleProvider {
 
     @Override
-    public BQModule module() {
-        return new MvcModule();
-    }
-
-
-    @Override
-    public Map<String, Type> configs() {
-        // TODO: config prefix is hardcoded. Refactor away from ConfigModule, and make provider
-        // generate config prefix, reusing it in metadata...
-        return Collections.singletonMap("mvc", MvcFactory.class);
-    }
-
-    @Override
-    public BQModuleMetadata.Builder moduleBuilder() {
-        return BQModuleProvider.super
-                .moduleBuilder()
-                .description("Provides a REST-based web MVC engine with pluggable view renderers.");
+    public BuiltModule buildModule() {
+        return BuiltModule.of(new MvcModule())
+                .provider(this)
+                .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
+                .config("mvc", MvcFactory.class)
+                .build();
     }
 
     @Override

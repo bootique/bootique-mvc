@@ -19,21 +19,16 @@
 
 package io.bootique.mvc.freemarker;
 
-import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
-import io.bootique.di.BQModule;
+import io.bootique.bootstrap.BuiltModule;
 
 public class MvcFreemarkerModuleProvider implements BQModuleProvider {
 
 	@Override
-	public BQModule module() {
-		return new MvcFreemarkerModule();
-	}
-
-	@Override
-	public BQModuleMetadata.Builder moduleBuilder() {
-		return BQModuleProvider.super
-				.moduleBuilder()
-				.description("Provides a renderer for bootique-mvc templates based on Freemarker framework.");
+	public BuiltModule buildModule() {
+		return BuiltModule.of(new MvcFreemarkerModule())
+				.provider(this)
+				.description("Integrates Freemarker-based renderer for bootique-mvc.")
+				.build();
 	}
 }
