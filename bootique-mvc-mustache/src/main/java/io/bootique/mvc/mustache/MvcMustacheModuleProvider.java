@@ -38,7 +38,7 @@ public class MvcMustacheModuleProvider implements BQModuleProvider {
     public BuiltModule buildModule() {
         return BuiltModule.of(new MvcMustacheModule())
                 .provider(this)
-                .description("Deprecated and can be replaced with 'bootique-mvc-jakarta-mustache'.")
+                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-mustache'.")
                 .build();
     }
 

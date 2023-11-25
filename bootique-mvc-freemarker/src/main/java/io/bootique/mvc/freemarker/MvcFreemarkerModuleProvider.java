@@ -33,7 +33,7 @@ public class MvcFreemarkerModuleProvider implements BQModuleProvider {
     public BuiltModule buildModule() {
         return BuiltModule.of(new MvcFreemarkerModule())
                 .provider(this)
-                .description("Deprecated and can be replaced with 'bootique-mvc-jakarta-freemarker'.")
+                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-freemarker'.")
                 .build();
     }
 }
