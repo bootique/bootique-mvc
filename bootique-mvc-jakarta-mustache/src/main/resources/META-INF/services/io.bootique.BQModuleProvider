@@ -1,1 +1,1 @@
-io.bootique.mvc.mustache.MvcMustacheModuleProvider
+io.bootique.mvc.mustache.MvcMustacheModule

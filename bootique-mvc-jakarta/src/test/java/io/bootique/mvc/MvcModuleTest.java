@@ -19,29 +19,29 @@
 
 package io.bootique.mvc;
 
-import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
-import io.bootique.jersey.JerseyModuleProvider;
+import io.bootique.BQRuntime;
+import io.bootique.jersey.JerseyModule;
+import io.bootique.junit5.*;
+import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-import java.util.Collections;
+@BQTest
+public class MvcModuleTest {
 
-public class MvcModuleProvider implements BQModuleProvider {
+    @BQTestTool
+    public BQTestFactory testFactory = new BQTestFactory();
 
-    @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(new MvcModule())
-                .provider(this)
-                .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
-                .config("mvc", MvcFactory.class)
-                .build();
+    @Test
+    public void autoLoadable() {
+        BQModuleProviderChecker.testAutoLoadable(MvcModule.class);
     }
 
-    @Override
-    @Deprecated(since = "3.0", forRemoval = true)
-    public Collection<BQModuleProvider> dependencies() {
-        return Collections.singletonList(
-                new JerseyModuleProvider()
+    @Deprecated
+    @Test
+    public void moduleDeclaresDependencies() {
+        final BQRuntime bqRuntime = testFactory.app().moduleProvider(new MvcModule()).createRuntime();
+        BQRuntimeChecker.testModulesLoaded(bqRuntime,
+                JerseyModule.class,
+                MvcModule.class
         );
     }
 }

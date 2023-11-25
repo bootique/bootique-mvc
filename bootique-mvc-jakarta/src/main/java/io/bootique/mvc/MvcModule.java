@@ -19,8 +19,10 @@
 
 package io.bootique.mvc;
 
-import io.bootique.ConfigModule;
+import io.bootique.BQModuleProvider;
+import io.bootique.bootstrap.BuiltModule;
 import io.bootique.config.ConfigurationFactory;
+import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.jersey.JerseyModule;
@@ -31,9 +33,13 @@ import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
 
 import javax.inject.Singleton;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
-public class MvcModule extends ConfigModule {
+public class MvcModule implements BQModule, BQModuleProvider {
+
+    private static final String CONFIG_PREFIX = "mvc";
 
     /**
      * Returns an instance of {@link MvcModuleExtender} used by downstream modules to load custom extensions to the
@@ -44,6 +50,21 @@ public class MvcModule extends ConfigModule {
      */
     public static MvcModuleExtender extend(Binder binder) {
         return new MvcModuleExtender(binder);
+    }
+
+    @Override
+    public BuiltModule buildModule() {
+        return BuiltModule.of(new MvcModule())
+                .provider(this)
+                .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
+                .config(CONFIG_PREFIX, MvcFactory.class)
+                .build();
+    }
+
+    @Override
+    @Deprecated(since = "3.0", forRemoval = true)
+    public Collection<BQModuleProvider> dependencies() {
+        return Collections.singletonList(new JerseyModule());
     }
 
     @Override
@@ -67,12 +88,12 @@ public class MvcModule extends ConfigModule {
     @Singleton
     @Provides
     TemplateResolver createTemplateResolver(ConfigurationFactory configFactory) {
-        return config(MvcFactory.class, configFactory).createResolver();
+        return configFactory.config(MvcFactory.class, CONFIG_PREFIX).createResolver();
     }
 
     @Singleton
     @Provides
     RenderableTemplateCache createRenderableTemplateCache(ConfigurationFactory configFactory) {
-        return config(MvcFactory.class, configFactory).createRenderableTemplateCache();
+        return configFactory.config(MvcFactory.class, CONFIG_PREFIX).createRenderableTemplateCache();
     }
 }
