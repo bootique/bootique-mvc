@@ -27,7 +27,10 @@ import java.nio.charset.StandardCharsets;
  * resolved outside of the view. AbstractView (or rather its concrete subclass)
  * is used as a root context for resolving the template. So subclasses would
  * normally define getters that allow to access the underlying model objects.
+ *
+ * @deprecated in favor of the Jakarta flavor
  */
+@Deprecated(since = "3.0", forRemoval = true)
 public abstract class AbstractView {
 
 	private static final Charset UTF8 = StandardCharsets.UTF_8;

@@ -29,6 +29,10 @@ import io.bootique.value.Duration;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+/**
+ * @deprecated in favor of the Jakarta flavor
+ */
+@Deprecated(since = "3.0", forRemoval = true)
 @BQConfig("Configures MVC services")
 public class MvcFactory {
 

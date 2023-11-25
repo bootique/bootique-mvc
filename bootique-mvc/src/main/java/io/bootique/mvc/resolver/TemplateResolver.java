@@ -21,6 +21,10 @@ package io.bootique.mvc.resolver;
 
 import io.bootique.mvc.Template;
 
+/**
+ * @deprecated in favor of the Jakarta flavor
+ */
+@Deprecated(since = "3.0", forRemoval = true)
 public interface TemplateResolver {
 
 	Template resolve(String templateName, Class<?> viewType);

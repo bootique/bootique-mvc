@@ -29,7 +29,9 @@ import java.nio.charset.Charset;
  * as URLs of relative resource names are first prepended with the specified path before resolving against the base.
  *
  * @since 3.0
+ * @deprecated in favor of the Jakarta flavor
  */
+@Deprecated(since = "3.0", forRemoval = true)
 public class DefaultTemplate implements Template {
 
     private final FolderResourceFactory base;

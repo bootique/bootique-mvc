@@ -33,6 +33,10 @@ import io.bootique.mvc.resolver.TemplateResolver;
 import javax.inject.Singleton;
 import java.util.Map;
 
+/**
+ * @deprecated in favor of the Jakarta flavor
+ */
+@Deprecated(since = "3.0", forRemoval = true)
 public class MvcModule extends ConfigModule {
 
     /**

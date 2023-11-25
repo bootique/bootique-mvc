@@ -27,7 +27,10 @@ import java.nio.charset.Charset;
 
 /**
  * A generic locator of a template resource that helps to resolve an actual provider-specific template.
+ *
+ * @deprecated in favor of the Jakarta flavor
  */
+@Deprecated(since = "3.0", forRemoval = true)
 public interface Template {
 
     String getName();

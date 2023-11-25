@@ -28,6 +28,10 @@ import java.util.Collection;
 
 import static java.util.Arrays.asList;
 
+/**
+ * @deprecated in favor of the Jakarta flavor
+ */
+@Deprecated(since = "3.0", forRemoval = true)
 public class MvcMustacheModuleProvider implements BQModuleProvider {
 
     @Override
