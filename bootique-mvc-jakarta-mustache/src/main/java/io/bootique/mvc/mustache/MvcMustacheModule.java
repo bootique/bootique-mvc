@@ -37,8 +37,7 @@ public class MvcMustacheModule implements BQModule, BQModuleProvider {
 
     @Override
     public BuiltModule buildModule() {
-        return BuiltModule.of(new MvcMustacheModule())
-                .provider(this)
+        return BuiltModule.of(this)
                 .description("Integrates Mustache-based renderer for bootique-mvc.")
                 .build();
     }

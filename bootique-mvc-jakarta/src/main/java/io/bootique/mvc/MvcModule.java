@@ -54,8 +54,7 @@ public class MvcModule implements BQModule, BQModuleProvider {
 
     @Override
     public BuiltModule buildModule() {
-        return BuiltModule.of(new MvcModule())
-                .provider(this)
+        return BuiltModule.of(this)
                 .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
                 .config(CONFIG_PREFIX, MvcFactory.class)
                 .build();
