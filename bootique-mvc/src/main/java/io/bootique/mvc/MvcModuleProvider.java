@@ -36,7 +36,7 @@ public class MvcModuleProvider implements BQModuleProvider {
     public BuiltModule buildModule() {
         return BuiltModule.of(new MvcModule())
                 .provider(this)
-                .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
+                .description("Deprecated and can be replaced with 'bootique-mvc-jakarta'.")
                 .config("mvc", MvcFactory.class)
                 .build();
     }
