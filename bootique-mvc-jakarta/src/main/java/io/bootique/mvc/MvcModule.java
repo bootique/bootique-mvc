@@ -20,7 +20,7 @@
 package io.bootique.mvc;
 
 import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
+import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
@@ -53,8 +53,8 @@ public class MvcModule implements BQModule, BQModuleProvider {
     }
 
     @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(this)
+    public ModuleCrate moduleCrate() {
+        return ModuleCrate.of(this)
                 .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
                 .config(CONFIG_PREFIX, MvcFactory.class)
                 .build();

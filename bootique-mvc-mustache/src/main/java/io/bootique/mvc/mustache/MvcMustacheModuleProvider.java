@@ -20,7 +20,7 @@
 package io.bootique.mvc.mustache;
 
 import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
+import io.bootique.ModuleCrate;
 import io.bootique.jersey.JerseyModuleProvider;
 import io.bootique.mvc.MvcModuleProvider;
 
@@ -35,8 +35,8 @@ import static java.util.Arrays.asList;
 public class MvcMustacheModuleProvider implements BQModuleProvider {
 
     @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(new MvcMustacheModule())
+    public ModuleCrate moduleCrate() {
+        return ModuleCrate.of(new MvcMustacheModule())
                 .provider(this)
                 .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-mustache'.")
                 .build();

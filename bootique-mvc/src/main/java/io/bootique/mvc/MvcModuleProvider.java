@@ -20,7 +20,7 @@
 package io.bootique.mvc;
 
 import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
+import io.bootique.ModuleCrate;
 import io.bootique.jersey.JerseyModuleProvider;
 
 import java.util.Collection;
@@ -33,8 +33,8 @@ import java.util.Collections;
 public class MvcModuleProvider implements BQModuleProvider {
 
     @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(new MvcModule())
+    public ModuleCrate moduleCrate() {
+        return ModuleCrate.of(new MvcModule())
                 .provider(this)
                 .description("Deprecated, can be replaced with 'bootique-mvc-jakarta'.")
                 .config("mvc", MvcFactory.class)

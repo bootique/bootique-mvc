@@ -20,7 +20,7 @@
 package io.bootique.mvc.freemarker;
 
 import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
+import io.bootique.ModuleCrate;
 
 /**
  * @author Lukasz Bachman
@@ -30,8 +30,8 @@ import io.bootique.bootstrap.BuiltModule;
 public class MvcFreemarkerModuleProvider implements BQModuleProvider {
 
     @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(new MvcFreemarkerModule())
+    public ModuleCrate moduleCrate() {
+        return ModuleCrate.of(new MvcFreemarkerModule())
                 .provider(this)
                 .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-freemarker'.")
                 .build();
