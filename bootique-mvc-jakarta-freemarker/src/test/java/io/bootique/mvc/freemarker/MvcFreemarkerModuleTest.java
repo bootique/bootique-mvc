@@ -19,13 +19,13 @@
 
 package io.bootique.mvc.freemarker;
 
-import io.bootique.junit5.BQModuleProviderChecker;
+import io.bootique.junit5.BQModuleTester;
 import org.junit.jupiter.api.Test;
 
 public class MvcFreemarkerModuleTest {
 
 	@Test
     public void autoLoadable() {
-		BQModuleProviderChecker.testAutoLoadable(MvcFreemarkerModule.class);
+		BQModuleTester.of(MvcFreemarkerModule.class).testAutoLoadable().testConfig();
 	}
 }

@@ -20,6 +20,7 @@
 package io.bootique.mvc;
 
 import io.bootique.ConfigModule;
+import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
@@ -48,6 +49,14 @@ public class MvcModule extends ConfigModule {
      */
     public static MvcModuleExtender extend(Binder binder) {
         return new MvcModuleExtender(binder);
+    }
+
+    @Override
+    public ModuleCrate crate() {
+        return ModuleCrate.of(this)
+                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta'.")
+                .config("mvc", MvcFactory.class)
+                .build();
     }
 
     @Override

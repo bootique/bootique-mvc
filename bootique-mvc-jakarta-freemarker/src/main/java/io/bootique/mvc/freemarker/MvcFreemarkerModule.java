@@ -19,19 +19,18 @@
 
 package io.bootique.mvc.freemarker;
 
-import io.bootique.BQModuleProvider;
+import io.bootique.BQModule;
 import io.bootique.ModuleCrate;
-import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.mvc.MvcModule;
 
 import javax.inject.Singleton;
 
-public class MvcFreemarkerModule implements BQModule, BQModuleProvider {
+public class MvcFreemarkerModule implements BQModule {
 
     @Override
-    public ModuleCrate moduleCrate() {
+    public ModuleCrate crate() {
         return ModuleCrate.of(this)
                 .description("Integrates Freemarker-based renderer for bootique-mvc.")
                 .build();

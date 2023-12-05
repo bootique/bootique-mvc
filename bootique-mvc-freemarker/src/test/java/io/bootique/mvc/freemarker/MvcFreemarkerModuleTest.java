@@ -17,30 +17,19 @@
  * under the License.
  */
 
-package io.bootique.mvc;
+package io.bootique.mvc.freemarker;
 
-import io.bootique.BQRuntime;
-import io.bootique.jersey.JerseyModule;
-import io.bootique.junit5.*;
+import io.bootique.junit5.BQModuleTester;
 import org.junit.jupiter.api.Test;
 
-@BQTest
-public class MvcModuleProviderTest {
 
-    @BQTestTool
-    public BQTestFactory testFactory = new BQTestFactory();
+/**
+ * @author Lukasz Bachman
+ */
+public class MvcFreemarkerModuleTest {
 
-    @Test
-    public void autoLoadable() {
-        BQModuleProviderChecker.testAutoLoadable(MvcModuleProvider.class);
-    }
-
-    @Test
-    public void moduleDeclaresDependencies() {
-        final BQRuntime bqRuntime = testFactory.app().moduleProvider(new MvcModuleProvider()).createRuntime();
-        BQRuntimeChecker.testModulesLoaded(bqRuntime,
-                JerseyModule.class,
-                MvcModule.class
-        );
-    }
+	@Test
+    public void check() {
+		BQModuleTester.of(MvcFreemarkerModule.class).testAutoLoadable().testConfig();
+	}
 }

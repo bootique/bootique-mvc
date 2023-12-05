@@ -20,6 +20,7 @@
 package io.bootique.mvc.mustache;
 
 import io.bootique.ConfigModule;
+import io.bootique.ModuleCrate;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.mvc.MvcModule;
@@ -32,6 +33,13 @@ import javax.inject.Singleton;
  */
 @Deprecated(since = "3.0", forRemoval = true)
 public class MvcMustacheModule extends ConfigModule {
+
+    @Override
+    public ModuleCrate crate() {
+        return ModuleCrate.of(this)
+                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-mustache'.")
+                .build();
+    }
 
     @Override
     public void configure(Binder binder) {

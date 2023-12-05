@@ -17,32 +17,17 @@
  * under the License.
  */
 
-package io.bootique.mvc.mustache;
+package io.bootique.mvc;
 
-import io.bootique.BQRuntime;
-import io.bootique.jersey.JerseyModule;
-import io.bootique.junit5.*;
-import io.bootique.mvc.MvcModule;
+import io.bootique.junit5.BQModuleTester;
+import io.bootique.junit5.BQTest;
 import org.junit.jupiter.api.Test;
 
 @BQTest
-public class MvcMustacheModuleProviderTest {
-
-    @BQTestTool
-    final BQTestFactory testFactory = new BQTestFactory();
+public class MvcModuleTest {
 
     @Test
-    public void autoLoadable() {
-        BQModuleProviderChecker.testAutoLoadable(MvcMustacheModuleProvider.class);
-    }
-
-    @Test
-    public void moduleDeclaresDependencies() {
-        final BQRuntime bqRuntime = testFactory.app().moduleProvider(new MvcMustacheModuleProvider()).createRuntime();
-        BQRuntimeChecker.testModulesLoaded(bqRuntime,
-                JerseyModule.class,
-                MvcModule.class,
-                MvcMustacheModule.class
-        );
+    public void check() {
+        BQModuleTester.of(MvcModule.class).testAutoLoadable().testConfig();
     }
 }

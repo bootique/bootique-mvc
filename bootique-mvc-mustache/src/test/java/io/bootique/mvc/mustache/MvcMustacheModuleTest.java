@@ -17,23 +17,17 @@
  * under the License.
  */
 
-package io.bootique.mvc.freemarker;
+package io.bootique.mvc.mustache;
 
-import io.bootique.BQModuleProvider;
-import io.bootique.ModuleCrate;
+import io.bootique.junit5.BQModuleTester;
+import io.bootique.junit5.BQTest;
+import org.junit.jupiter.api.Test;
 
-/**
- * @author Lukasz Bachman
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
-public class MvcFreemarkerModuleProvider implements BQModuleProvider {
+@BQTest
+public class MvcMustacheModuleTest {
 
-    @Override
-    public ModuleCrate moduleCrate() {
-        return ModuleCrate.of(new MvcFreemarkerModule())
-                .provider(this)
-                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-freemarker'.")
-                .build();
+    @Test
+    public void check() {
+        BQModuleTester.of(MvcMustacheModule.class).testAutoLoadable().testConfig();
     }
 }

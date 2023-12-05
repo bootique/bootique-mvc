@@ -19,10 +19,9 @@
 
 package io.bootique.mvc;
 
-import io.bootique.BQModuleProvider;
+import io.bootique.BQModule;
 import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
-import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.jersey.JerseyModule;
@@ -33,11 +32,9 @@ import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
 
 import javax.inject.Singleton;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 
-public class MvcModule implements BQModule, BQModuleProvider {
+public class MvcModule implements BQModule {
 
     private static final String CONFIG_PREFIX = "mvc";
 
@@ -53,17 +50,11 @@ public class MvcModule implements BQModule, BQModuleProvider {
     }
 
     @Override
-    public ModuleCrate moduleCrate() {
+    public ModuleCrate crate() {
         return ModuleCrate.of(this)
                 .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
                 .config(CONFIG_PREFIX, MvcFactory.class)
                 .build();
-    }
-
-    @Override
-    @Deprecated(since = "3.0", forRemoval = true)
-    public Collection<BQModuleProvider> dependencies() {
-        return Collections.singletonList(new JerseyModule());
     }
 
     @Override

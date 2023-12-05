@@ -19,33 +19,22 @@
 
 package io.bootique.mvc.mustache;
 
-import io.bootique.BQModuleProvider;
+import io.bootique.BQModule;
 import io.bootique.ModuleCrate;
-import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
-import io.bootique.jersey.JerseyModule;
 import io.bootique.mvc.MvcModule;
 import io.bootique.mvc.renderer.RenderableTemplateCache;
 
 import javax.inject.Singleton;
-import java.util.Collection;
 
-import static java.util.Arrays.asList;
-
-public class MvcMustacheModule implements BQModule, BQModuleProvider {
+public class MvcMustacheModule implements BQModule {
 
     @Override
-    public ModuleCrate moduleCrate() {
+    public ModuleCrate crate() {
         return ModuleCrate.of(this)
                 .description("Integrates Mustache-based renderer for bootique-mvc.")
                 .build();
-    }
-
-    @Override
-    @Deprecated(since = "3.0", forRemoval = true)
-    public Collection<BQModuleProvider> dependencies() {
-        return asList(new MvcModule(), new JerseyModule());
     }
 
     @Override
