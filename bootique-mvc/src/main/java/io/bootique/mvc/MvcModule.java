@@ -19,7 +19,7 @@
 
 package io.bootique.mvc;
 
-import io.bootique.ConfigModule;
+import io.bootique.BQModule;
 import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
@@ -38,7 +38,9 @@ import java.util.Map;
  * @deprecated in favor of the Jakarta flavor
  */
 @Deprecated(since = "3.0", forRemoval = true)
-public class MvcModule extends ConfigModule {
+public class MvcModule implements BQModule {
+
+    private static final String CONFIG_PREFIX = "mvc";
 
     /**
      * Returns an instance of {@link MvcModuleExtender} used by downstream modules to load custom extensions to the
@@ -55,7 +57,7 @@ public class MvcModule extends ConfigModule {
     public ModuleCrate crate() {
         return ModuleCrate.of(this)
                 .description("Deprecated, can be replaced with 'bootique-mvc-jakarta'.")
-                .config("mvc", MvcFactory.class)
+                .config(CONFIG_PREFIX, MvcFactory.class)
                 .build();
     }
 
@@ -80,12 +82,12 @@ public class MvcModule extends ConfigModule {
     @Singleton
     @Provides
     TemplateResolver createTemplateResolver(ConfigurationFactory configFactory) {
-        return config(MvcFactory.class, configFactory).createResolver();
+        return configFactory.config(MvcFactory.class, CONFIG_PREFIX).createResolver();
     }
 
     @Singleton
     @Provides
     RenderableTemplateCache createRenderableTemplateCache(ConfigurationFactory configFactory) {
-        return config(MvcFactory.class, configFactory).createRenderableTemplateCache();
+        return configFactory.config(MvcFactory.class, CONFIG_PREFIX).createRenderableTemplateCache();
     }
 }
