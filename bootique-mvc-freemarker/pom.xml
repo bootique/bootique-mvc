@@ -55,17 +55,14 @@
 		<dependency>
 			<groupId>io.bootique.jersey</groupId>
 			<artifactId>bootique-jersey</artifactId>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.bootique.mvc</groupId>
 			<artifactId>bootique-mvc</artifactId>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<scope>compile</scope>
 		</dependency>
 
 		<!-- Unit test dependencies -->
