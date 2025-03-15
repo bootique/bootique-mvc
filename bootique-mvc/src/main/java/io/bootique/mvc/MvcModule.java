@@ -31,7 +31,7 @@ import io.bootique.mvc.renderer.TemplateRenderer;
 import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Map;
 
 /**

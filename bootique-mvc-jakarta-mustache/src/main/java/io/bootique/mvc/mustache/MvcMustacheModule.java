@@ -26,7 +26,7 @@ import io.bootique.di.Provides;
 import io.bootique.mvc.MvcModule;
 import io.bootique.mvc.renderer.RenderableTemplateCache;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 public class MvcMustacheModule implements BQModule {
 

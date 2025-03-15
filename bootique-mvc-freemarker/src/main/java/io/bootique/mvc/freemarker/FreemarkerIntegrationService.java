@@ -28,7 +28,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import io.bootique.BootiqueException;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;

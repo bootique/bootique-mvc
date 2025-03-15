@@ -23,7 +23,7 @@ import freemarker.template.TemplateException;
 import io.bootique.mvc.Template;
 import io.bootique.mvc.renderer.TemplateRenderer;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.io.Writer;
 
