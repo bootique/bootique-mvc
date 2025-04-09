@@ -30,6 +30,9 @@ import java.nio.charset.Charset;
  */
 public interface Template {
 
+    /**
+     * Returns template symbolic name.
+     */
     String getName();
 
     /**
@@ -38,12 +41,15 @@ public interface Template {
     URL getUrl();
 
     /**
-     * Returns a URL of a related resource (such as sub-template).
+     * Returns a URL of a related resource (usually, a child template).
      *
      * @since 3.0
      */
     URL getUrl(String resourceName);
 
+    /**
+     * Returns a Reader for this template.
+     */
     default Reader reader() {
         Charset encoding = getEncoding();
         URL url = getUrl();
@@ -55,6 +61,8 @@ public interface Template {
     }
 
     /**
+     * Returns a reader for a related resource (usually, a child template).
+     *
      * @since 3.0
      */
     default Reader reader(String resourceName) {
