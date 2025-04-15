@@ -21,8 +21,11 @@ package io.bootique.mvc.resolver;
 import io.bootique.mvc.Template;
 import io.bootique.resource.FolderResourceFactory;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.function.Function;
 
 /**
  * A template implementation that resolves template resources relative the template base. The root URL as well
@@ -36,6 +39,8 @@ public class DefaultTemplate implements Template {
     private final String path;
     private final String name;
     private final Charset sourceEncoding;
+    private final Function<String, URL> onFailedUrl;
+    private final Function<URL, Reader> onFailedReader;
 
     private volatile URL url;
 
@@ -43,21 +48,24 @@ public class DefaultTemplate implements Template {
             FolderResourceFactory base,
             String path,
             String name,
-            Charset sourceEncoding) {
+            Charset sourceEncoding,
+            Function<String, URL> onFailedUrl,
+            Function<URL, Reader> onFailedReader) {
 
         this.name = name;
         this.base = base;
         this.path = path;
         this.sourceEncoding = sourceEncoding;
+        this.onFailedUrl = onFailedUrl;
+        this.onFailedReader = onFailedReader;
     }
 
     @Override
     public URL getUrl() {
 
         // No synchronization. No harm if the URL is resolved multiple times if called concurrently the first time
-        if (url == null) {
-            String path = resourcePath(name);
-            this.url = base.getUrl(path);
+        if (this.url == null) {
+            this.url = getUrl(name);
         }
 
         return url;
@@ -68,8 +76,37 @@ public class DefaultTemplate implements Template {
 
         // TODO: does it make sense to cache subresource URLs?
 
-        String path = resourcePath(resourceName);
-        return base.getUrl(path);
+        try {
+            String path = resourcePath(resourceName);
+            return base.getUrl(path);
+        } catch (Exception e) {
+            return onFailedUrl(resourceName, e);
+        }
+    }
+
+    @Override
+    public Reader reader() {
+        Charset encoding = getEncoding();
+
+        URL url = getUrl();
+
+        try {
+            return new InputStreamReader(url.openStream(), encoding);
+        } catch (Exception e) {
+            return onFailedReader(url, e);
+        }
+    }
+
+    @Override
+    public Reader reader(String resourceName) {
+        Charset encoding = getEncoding();
+
+        URL url = getUrl(resourceName);
+        try {
+            return new InputStreamReader(url.openStream(), encoding);
+        } catch (Exception e) {
+            return onFailedReader(url, e);
+        }
     }
 
     @Override
@@ -80,6 +117,32 @@ public class DefaultTemplate implements Template {
     @Override
     public String getName() {
         return name;
+    }
+
+    /**
+     * A fallback for when finding a reader failed. Allows for optional recovery.
+     *
+     * @since 3.0
+     */
+    protected URL onFailedUrl(String resourceName, Exception urlFailure) {
+        if (onFailedUrl != null) {
+            return onFailedUrl.apply(resourceName);
+        }
+
+        throw new RuntimeException("Error resolving URL for resource: " + resourceName, urlFailure);
+    }
+
+    /**
+     * A fallback for when finding a reader failed. Allows for optional recovery.
+     *
+     * @since 3.0
+     */
+    protected Reader onFailedReader(URL url, Exception readerFailure) {
+        if (onFailedReader != null) {
+            return onFailedReader.apply(url);
+        }
+
+        throw new RuntimeException("Error opening URL: " + url, readerFailure);
     }
 
     protected String resourcePath(String resource) {

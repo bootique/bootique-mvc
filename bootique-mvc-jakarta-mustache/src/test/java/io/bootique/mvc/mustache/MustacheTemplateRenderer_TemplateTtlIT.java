@@ -98,7 +98,9 @@ public class MustacheTemplateRenderer_TemplateTtlIT {
                 new FolderResourceFactory(targetDir.toString()),
                 "",
                 name,
-                StandardCharsets.UTF_8);
+                StandardCharsets.UTF_8,
+                null,
+                null);
     }
 
     private static void writeTemplate(Template template, String contents) {

@@ -1,3 +1,7 @@
+## 3.0-RC1
+
+* #29 Graceful handling of missing templates
+
 ## 3.0-M3
 
 * #28 (Jakarta migration) Deprecate JAX RS 2 modules

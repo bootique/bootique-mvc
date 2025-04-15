@@ -19,6 +19,7 @@
 
 package io.bootique.mvc;
 
+import io.bootique.BootiqueException;
 import io.bootique.annotation.BQConfig;
 import io.bootique.annotation.BQConfigProperty;
 import io.bootique.mvc.renderer.RenderableTemplateCache;
@@ -26,8 +27,12 @@ import io.bootique.mvc.resolver.DefaultTemplateResolver;
 import io.bootique.resource.FolderResourceFactory;
 import io.bootique.value.Duration;
 
+import java.io.Reader;
+import java.io.StringReader;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Objects;
+import java.util.function.Function;
 
 @BQConfig("Configures MVC services")
 public class MvcFactory {
@@ -35,6 +40,7 @@ public class MvcFactory {
     private FolderResourceFactory templateBase;
     private Charset templateEncoding;
     private Duration templateTtl;
+    private Boolean allowMissingTemplates;
 
     public MvcFactory() {
         this.templateBase = new FolderResourceFactory("");
@@ -48,7 +54,13 @@ public class MvcFactory {
     }
 
     public DefaultTemplateResolver createResolver() {
-        return new DefaultTemplateResolver(templateBase, templateEncoding);
+        boolean allowMissingTemplates = this.allowMissingTemplates != null ? this.allowMissingTemplates : false;
+
+        return new DefaultTemplateResolver(
+                templateBase,
+                templateEncoding,
+                allowMissingTemplates ? onFailedUrl() : null,
+                allowMissingTemplates ? onFailedReader() : null);
     }
 
     /**
@@ -87,5 +99,26 @@ public class MvcFactory {
             " By default is not set to anything, causing template reloading on every call")
     public void setTemplateTtl(Duration templateTtl) {
         this.templateTtl = templateTtl;
+    }
+
+    /**
+     * @since 3.0
+     */
+    @BQConfigProperty("If set to 'true', any templates that fail to resolve would be replaced by an empty template")
+    public void setAllowMissingTemplates(Boolean allowMissingTemplates) {
+        this.allowMissingTemplates = allowMissingTemplates;
+    }
+
+    private Function<String, URL> onFailedUrl() {
+        URL emptyTemplate = MvcFactory.class.getResource("EmptyTemplate");
+        if (emptyTemplate == null) {
+            throw new BootiqueException(1, "EmptyTemplate file is missing");
+        }
+
+        return s -> emptyTemplate;
+    }
+
+    private Function<URL, Reader> onFailedReader() {
+        return u -> new StringReader("");
     }
 }

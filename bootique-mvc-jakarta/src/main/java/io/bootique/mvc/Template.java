@@ -19,8 +19,6 @@
 
 package io.bootique.mvc;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -50,30 +48,14 @@ public interface Template {
     /**
      * Returns a Reader for this template.
      */
-    default Reader reader() {
-        Charset encoding = getEncoding();
-        URL url = getUrl();
-        try {
-            return new InputStreamReader(url.openStream(), encoding);
-        } catch (IOException e) {
-            throw new RuntimeException("Error opening URL: " + url, e);
-        }
-    }
+    Reader reader();
 
     /**
      * Returns a reader for a related resource (usually, a child template).
      *
      * @since 3.0
      */
-    default Reader reader(String resourceName) {
-        Charset encoding = getEncoding();
-        URL url = getUrl(resourceName);
-        try {
-            return new InputStreamReader(url.openStream(), encoding);
-        } catch (IOException e) {
-            throw new RuntimeException("Error opening URL: " + url, e);
-        }
-    }
+    Reader reader(String resourceName);
 
     Charset getEncoding();
 }
