@@ -71,6 +71,21 @@ public class MustacheTemplateRenderer_AllowEmptyTemplatesIT {
         assertEquals("", read(template::reader));
     }
 
+    @Test
+    public void allowEmptyClasspath() {
+
+        BQRuntime runtime = factory.app()
+                .autoLoadModules()
+                .module(b -> BQCoreModule.extend(b).setProperty("bq.mvc.templateBase", "classpath:io/bootique/mvc/mustache/MISSINGS"))
+                .module(b -> BQCoreModule.extend(b).setProperty("bq.mvc.allowMissingTemplates", "true"))
+                .createRuntime();
+
+        TemplateResolver resolver = runtime.getInstance(TemplateResolver.class);
+
+        Template template = resolver.resolve("MISSING.mustache", MustacheTemplateRenderer_AllowEmptyTemplatesIT.class);
+        assertEquals("", read(template::reader));
+    }
+
     String read(Supplier<Reader> readerMaker) {
         StringBuilder out = new StringBuilder();
         try (Reader r = readerMaker.get()) {
