@@ -39,7 +39,7 @@ Include ```bootique-bom```:
         <dependency>
             <groupId>io.bootique.bom</groupId>
             <artifactId>bootique-bom</artifactId>
-            <version>3.0-M6</version>
+            <version>3.0-RC1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
