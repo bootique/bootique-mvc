@@ -22,14 +22,10 @@ package io.bootique.mvc.freemarker;
 import io.bootique.junit5.BQModuleTester;
 import org.junit.jupiter.api.Test;
 
-
-/**
- * @author Lukasz Bachman
- */
 public class MvcFreemarkerModuleTest {
 
 	@Test
-    public void check() {
+    public void autoLoadable() {
 		BQModuleTester.of(MvcFreemarkerModule.class).testAutoLoadable().testConfig();
 	}
 }

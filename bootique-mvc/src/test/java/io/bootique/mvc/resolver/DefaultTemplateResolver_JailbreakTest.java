@@ -77,6 +77,6 @@ public class DefaultTemplateResolver_JailbreakTest {
     }
 
     private DefaultTemplateResolver resolver(String basePath) {
-        return new DefaultTemplateResolver(new FolderResourceFactory(basePath), DEFAULT_CHARSET);
+        return new DefaultTemplateResolver(new FolderResourceFactory(basePath), DEFAULT_CHARSET, null, null);
     }
 }

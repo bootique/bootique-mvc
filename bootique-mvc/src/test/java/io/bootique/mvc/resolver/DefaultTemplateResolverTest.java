@@ -175,7 +175,7 @@ public class DefaultTemplateResolverTest {
     }
 
     private DefaultTemplateResolver resolver(String basePath) {
-        return new DefaultTemplateResolver(new FolderResourceFactory(basePath), DEFAULT_CHARSET);
+        return new DefaultTemplateResolver(new FolderResourceFactory(basePath), DEFAULT_CHARSET, null, null);
     }
 
     private URL baseClasspathUrl(String resourceRelativePath) throws MalformedURLException {

@@ -34,10 +34,7 @@ import java.util.Objects;
 
 /**
  * A template renderer that locates child templates based on the location of the root template.
- *
- * @deprecated in favor of the Jakarta flavor
  */
-@Deprecated(since = "3.0", forRemoval = true)
 public class MustacheTemplateRenderer implements TemplateRenderer {
 
     private final RenderableTemplateCache templateCache;

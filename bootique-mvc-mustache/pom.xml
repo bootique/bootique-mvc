@@ -28,8 +28,8 @@
 	</parent>
 	<artifactId>bootique-mvc-mustache</artifactId>
 	<packaging>jar</packaging>
-	<name>bootique-mvc-mustache: Bootique MVC implementation based on Mustache.</name>
-	<description>Provides Mustache integration as a template engine for Bootique MVC.</description>
+	<name>bootique-mvc-mustache: Bootique MVC implementation based on Mustache</name>
+	<description>Provides Mustache integration as a template engine for Bootique MVC</description>
 
 	<dependencyManagement>
 		<dependencies>
@@ -50,7 +50,7 @@
 		<!-- Compile dependencies -->
 		<dependency>
 			<groupId>io.bootique.jersey</groupId>
-			<artifactId>bootique-jersey</artifactId>
+			<artifactId>bootique-jersey-jakarta</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.bootique.mvc</groupId>
@@ -74,7 +74,7 @@
 		</dependency>
 		<dependency>
 			<groupId>io.bootique.jetty</groupId>
-			<artifactId>bootique-jetty-junit5</artifactId>
+			<artifactId>bootique-jetty-jakarta-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

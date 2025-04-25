@@ -23,41 +23,37 @@ import io.bootique.mvc.Template;
 
 import java.util.Map;
 
-/**
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 public class ByExtensionTemplateRenderers implements TemplateRenderers {
 
-    private final Map<String, TemplateRenderer> renderersByExtension;
+	private final Map<String, TemplateRenderer> renderersByExtension;
 
-    public ByExtensionTemplateRenderers(Map<String, TemplateRenderer> renderersByExtension) {
-        // expecting each extension in the map to start with "."
-        this.renderersByExtension = renderersByExtension;
-    }
+	public ByExtensionTemplateRenderers(Map<String, TemplateRenderer> renderersByExtension) {
+		// expecting each extension in the map to start with "."
+		this.renderersByExtension = renderersByExtension;
+	}
 
-    @Override
-    public TemplateRenderer getRenderer(Template template) {
-        String ext = getExtension(template.getName());
-        TemplateRenderer renderer = renderersByExtension.get(ext);
-        if (renderer == null) {
-            throw new IllegalArgumentException("Unsupported template extension: "
-                    + ext
-                    + ", supported extensions: "
-                    + renderersByExtension.keySet());
-        }
+	@Override
+	public TemplateRenderer getRenderer(Template template) {
+		String ext = getExtension(template.getName());
+		TemplateRenderer renderer = renderersByExtension.get(ext);
+		if (renderer == null) {
+			throw new IllegalArgumentException("Unsupported template extension: "
+					+ ext
+					+ ", supported extensions: "
+					+ renderersByExtension.keySet());
+		}
 
-        return renderer;
-    }
+		return renderer;
+	}
 
-    String getExtension(String path) {
-        int dot = path.lastIndexOf('.');
-        if (dot <= 0 || dot == path.length() - 1) {
-            // TODO: if we only have one renderer, perhaps no extension is fine?
-            throw new IllegalArgumentException("Path without extension: " + path);
-        }
+	String getExtension(String path) {
+		int dot = path.lastIndexOf('.');
+		if (dot <= 0 || dot == path.length() - 1) {
+			// TODO: if we only have one renderer, perhaps no extension is fine?
+			throw new IllegalArgumentException("Path without extension: " + path);
+		}
 
-        // include dot in the result
-        return path.substring(dot);
-    }
+		// include dot in the result
+		return path.substring(dot);
+	}
 }

@@ -27,27 +27,22 @@ import jakarta.inject.Inject;
 import java.io.IOException;
 import java.io.Writer;
 
-/**
- * @author Lukasz Bachman
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 public class FreemarkerTemplateRenderer implements TemplateRenderer {
 
-	private FreemarkerIntegrationService freemarkerIntegration;
+    private FreemarkerIntegrationService freemarkerIntegration;
 
-	@Inject
-	public FreemarkerTemplateRenderer(FreemarkerIntegrationService freemarkerIntegration) {
-		this.freemarkerIntegration = freemarkerIntegration;
-	}
+    @Inject
+    public FreemarkerTemplateRenderer(FreemarkerIntegrationService freemarkerIntegration) {
+        this.freemarkerIntegration = freemarkerIntegration;
+    }
 
-	@Override
-	public void render(Writer out, Template template, Object rootModel) throws IOException {
-		freemarker.template.Template freemarkerTemplate = freemarkerIntegration.getTemplate(template);
-		try {
-			freemarkerTemplate.process(rootModel, out);
-		} catch (TemplateException ex) {
-			throw new IOException("Unexpected exception while processing template: " + template.getUrl().getPath(), ex);
-		}
-	}
+    @Override
+    public void render(Writer out, Template template, Object rootModel) throws IOException {
+        freemarker.template.Template freemarkerTemplate = freemarkerIntegration.getTemplate(template);
+        try {
+            freemarkerTemplate.process(rootModel, out);
+        } catch (TemplateException ex) {
+            throw new IOException("Unexpected exception while processing template: " + template.getUrl().getPath(), ex);
+        }
+    }
 }

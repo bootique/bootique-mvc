@@ -21,10 +21,10 @@ package io.bootique.mvc;
 
 import io.bootique.mvc.renderer.TemplateRenderers;
 import io.bootique.mvc.resolver.TemplateResolver;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.ext.MessageBodyWriter;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.MessageBodyWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -32,10 +32,6 @@ import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-/**
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 public class AbstractViewWriter implements MessageBodyWriter<AbstractView> {
 
     private final TemplateResolver templateResolver;
@@ -58,8 +54,10 @@ public class AbstractViewWriter implements MessageBodyWriter<AbstractView> {
 
     @Override
     public void writeTo(
-            AbstractView t, Class<?> type,
-            Type genericType, Annotation[] annotations,
+            AbstractView t,
+            Class<?> type,
+            Type genericType,
+            Annotation[] annotations,
             MediaType mediaType,
             MultivaluedMap<String, Object> httpHeaders,
             OutputStream entityStream)
@@ -72,4 +70,5 @@ public class AbstractViewWriter implements MessageBodyWriter<AbstractView> {
         // flush but do not close the underlying stream
         out.flush();
     }
+
 }

@@ -22,25 +22,35 @@ package io.bootique.mvc.resolver;
 import io.bootique.mvc.Template;
 import io.bootique.resource.FolderResourceFactory;
 
+import java.io.Reader;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 
-/**
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 public class DefaultTemplateResolver implements TemplateResolver {
 
     private final Charset templateEncoding;
     private final FolderResourceFactory templateBase;
     private final ConcurrentMap<String, Template> cachedTemplates;
+    private final Function<String, URL> onFailedUrl;
+    private final Function<URL, Reader> onFailedReader;
 
-    public DefaultTemplateResolver(FolderResourceFactory templateBase, Charset templateEncoding) {
+    /**
+     * @since 3.0
+     */
+    public DefaultTemplateResolver(
+            FolderResourceFactory templateBase,
+            Charset templateEncoding,
+            Function<String, URL> onFailedUrl,
+            Function<URL, Reader> onFailedReader) {
         this.templateBase = templateBase;
         this.templateEncoding = Objects.requireNonNull(templateEncoding, "Null templateEncoding");
         this.cachedTemplates = new ConcurrentHashMap<>();
+        this.onFailedUrl = onFailedUrl;
+        this.onFailedReader = onFailedReader;
     }
 
     @Override
@@ -57,6 +67,6 @@ public class DefaultTemplateResolver implements TemplateResolver {
 
     private Template createTemplate(String templateName, Package pkg) {
         String path = pkg != null ? pkg.getName().replace('.', '/') + "/" : "";
-        return new DefaultTemplate(templateBase, path, templateName, templateEncoding);
+        return new DefaultTemplate(templateBase, path, templateName, templateEncoding, onFailedUrl, onFailedReader);
     }
 }

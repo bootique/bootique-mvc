@@ -19,15 +19,11 @@
 
 package io.bootique.mvc.renderer;
 
-import io.bootique.mvc.Template;
-
 import java.io.IOException;
 import java.io.Writer;
 
-/**
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
+import io.bootique.mvc.Template;
+
 public interface TemplateRenderer {
 
 	void render(Writer out, Template template, Object rootModel) throws IOException;

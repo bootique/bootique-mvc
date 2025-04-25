@@ -21,11 +21,11 @@ package io.bootique.mvc.mustache.view;
 
 import io.bootique.mvc.AbstractView;
 
-// intentionally keeping the view class in a different package 
-// from API and IT to test per-package template laoding
+// intentionally keeping the view class in a different package
+// from API and IT to test per-package template loading
 public class ConcreteView extends AbstractView {
 
-	private Object model;
+	private final Object model;
 
 	public ConcreteView(String template, Object model) {
 		super(template);

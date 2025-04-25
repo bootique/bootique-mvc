@@ -19,20 +19,18 @@
 
 package io.bootique.mvc;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
  * A generic locator of a template resource that helps to resolve an actual provider-specific template.
- *
- * @deprecated in favor of the Jakarta flavor
  */
-@Deprecated(since = "3.0", forRemoval = true)
 public interface Template {
 
+    /**
+     * Returns template symbolic name.
+     */
     String getName();
 
     /**
@@ -41,34 +39,23 @@ public interface Template {
     URL getUrl();
 
     /**
-     * Returns a URL of a related resource (such as sub-template).
+     * Returns a URL of a related resource (usually, a child template).
      *
      * @since 3.0
      */
     URL getUrl(String resourceName);
 
-    default Reader reader() {
-        Charset encoding = getEncoding();
-        URL url = getUrl();
-        try {
-            return new InputStreamReader(url.openStream(), encoding);
-        } catch (IOException e) {
-            throw new RuntimeException("Error opening URL: " + url, e);
-        }
-    }
+    /**
+     * Returns a Reader for this template.
+     */
+    Reader reader();
 
     /**
+     * Returns a reader for a related resource (usually, a child template).
+     *
      * @since 3.0
      */
-    default Reader reader(String resourceName) {
-        Charset encoding = getEncoding();
-        URL url = getUrl(resourceName);
-        try {
-            return new InputStreamReader(url.openStream(), encoding);
-        } catch (IOException e) {
-            throw new RuntimeException("Error opening URL: " + url, e);
-        }
-    }
+    Reader reader(String resourceName);
 
     Charset getEncoding();
 }

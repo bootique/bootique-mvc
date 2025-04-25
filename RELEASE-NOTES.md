@@ -1,3 +1,7 @@
+## 4.0-M1
+
+*  #30 Remove deprecated modules (javax flavor)
+
 ## 3.0-RC1
 
 * #29 Graceful handling of missing templates

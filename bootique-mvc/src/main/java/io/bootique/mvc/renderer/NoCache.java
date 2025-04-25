@@ -22,10 +22,6 @@ import io.bootique.mvc.Template;
 
 import java.util.function.Function;
 
-/**
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 class NoCache implements RenderableTemplateCache {
 
     @Override

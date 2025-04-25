@@ -28,14 +28,13 @@ import io.bootique.junit5.BQTest;
 import io.bootique.junit5.BQTestTool;
 import io.bootique.mvc.freemarker.views.HelloWorldView;
 import io.bootique.mvc.freemarker.views.hierarchy.PageView;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,21 +55,21 @@ public class MvcFreemarkerModuleIT {
     @Test
     public void shouldRenderSimpleHelloMessage() {
         Response r1 = jetty.getTarget().path("/hello").request().get();
-        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
+        assertEquals(Response.Status.OK.getStatusCode(), r1.getStatus());
         assertEquals("Hello John Doe!", r1.readEntity(String.class));
     }
 
     @Test
     public void shouldRenderPageThatUsesHierarchicalLayoutWithAllSectionsPopulated() {
         Response r1 = jetty.getTarget().path("/hierarchy-all").request().get();
-        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
+        assertEquals(Response.Status.OK.getStatusCode(), r1.getStatus());
         assertEquals("This is custom header.This is custom content.This is custom footer.", r1.readEntity(String.class));
     }
 
     @Test
     public void shouldRenderPageThatUsesHierarchicalLayoutWithJustSomeSectionsPopulated() {
         Response r1 = jetty.getTarget().path("/hierarchy-some").request().get();
-        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
+        assertEquals(Response.Status.OK.getStatusCode(), r1.getStatus());
         assertEquals("Default header.This is custom content.", r1.readEntity(String.class));
     }
 

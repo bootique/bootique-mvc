@@ -27,17 +27,12 @@ import io.bootique.mvc.MvcModule;
 
 import jakarta.inject.Singleton;
 
-/**
- * @author Lukasz Bachman
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 public class MvcFreemarkerModule implements BQModule {
 
     @Override
     public ModuleCrate crate() {
         return ModuleCrate.of(this)
-                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-freemarker'.")
+                .description("Integrates Freemarker-based renderer for bootique-mvc.")
                 .build();
     }
 

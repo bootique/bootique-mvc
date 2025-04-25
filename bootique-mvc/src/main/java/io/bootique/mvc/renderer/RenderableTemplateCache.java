@@ -27,9 +27,7 @@ import java.util.function.Function;
  * A cache to store provider-specific templates.
  *
  * @since 3.0
- * @deprecated in favor of the Jakarta flavor
  */
-@Deprecated(since = "3.0", forRemoval = true)
 public interface RenderableTemplateCache {
 
     /**

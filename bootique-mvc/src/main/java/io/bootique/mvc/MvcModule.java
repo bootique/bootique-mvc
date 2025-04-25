@@ -34,10 +34,6 @@ import io.bootique.mvc.resolver.TemplateResolver;
 import jakarta.inject.Singleton;
 import java.util.Map;
 
-/**
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 public class MvcModule implements BQModule {
 
     private static final String CONFIG_PREFIX = "mvc";
@@ -56,7 +52,7 @@ public class MvcModule implements BQModule {
     @Override
     public ModuleCrate crate() {
         return ModuleCrate.of(this)
-                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta'.")
+                .description("Provides Bootique's own REST-based web MVC engine with pluggable view renderers.")
                 .config(CONFIG_PREFIX, MvcFactory.class)
                 .build();
     }

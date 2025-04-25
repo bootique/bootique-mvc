@@ -28,16 +28,12 @@ import io.bootique.mvc.renderer.RenderableTemplateCache;
 
 import jakarta.inject.Singleton;
 
-/**
- * @deprecated in favor of the Jakarta flavor
- */
-@Deprecated(since = "3.0", forRemoval = true)
 public class MvcMustacheModule implements BQModule {
 
     @Override
     public ModuleCrate crate() {
         return ModuleCrate.of(this)
-                .description("Deprecated, can be replaced with 'bootique-mvc-jakarta-mustache'.")
+                .description("Integrates Mustache-based renderer for bootique-mvc.")
                 .build();
     }
 

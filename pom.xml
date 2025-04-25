@@ -39,10 +39,6 @@
         <module>bootique-mvc</module>
         <module>bootique-mvc-mustache</module>
         <module>bootique-mvc-freemarker</module>
-
-        <module>bootique-mvc-jakarta</module>
-        <module>bootique-mvc-jakarta-mustache</module>
-        <module>bootique-mvc-jakarta-freemarker</module>
     </modules>
 
     <properties>
