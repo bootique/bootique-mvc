@@ -23,6 +23,7 @@ import io.bootique.BQCoreModule;
 import io.bootique.BQRuntime;
 import io.bootique.Bootique;
 import io.bootique.jetty.JettyModule;
+import io.bootique.jetty.MappedServlet;
 import io.bootique.jetty.junit5.JettyTester;
 import io.bootique.junit5.BQApp;
 import io.bootique.junit5.BQTest;
@@ -37,7 +38,7 @@ public abstract class TestWithTemplateServer {
     @BQApp(BQTestScope.GLOBAL)
     static BQRuntime templateServer = Bootique.app("-s")
             .autoLoadModules()
-            .module(b -> JettyModule.extend(b).addStaticServlet("templates", "/io/bootique/mvc/mustache/view/*"))
+            .module(b -> JettyModule.extend(b).addMappedServlet(MappedServlet.ofStatic("/io/bootique/mvc/mustache/view/*").name("templates").build()))
             .module(b -> BQCoreModule.extend(b)
                     .setProperty("bq.jetty.staticResourceBase", "classpath:templates_docroot"))
             .module(templateServerJetty.moduleReplacingConnectors())
