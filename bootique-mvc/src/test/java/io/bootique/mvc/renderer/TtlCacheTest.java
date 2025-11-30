@@ -21,16 +21,16 @@ package io.bootique.mvc.renderer;
 import io.bootique.mvc.Template;
 import org.junit.jupiter.api.Test;
 
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class TtlCacheTest {
 
@@ -40,12 +40,10 @@ public class TtlCacheTest {
         TtlCache cache = new TtlCache(20);
 
         URL u1 = new URL("file:/tmp/t1.txt");
-        Template t1 = mock(Template.class);
-        when(t1.getUrl()).thenReturn(u1);
+        Template t1 = new TestTemplate(u1);
 
         URL u2 = new URL("file:/tmp/t2.txt");
-        Template t2 = mock(Template.class);
-        when(t2.getUrl()).thenReturn(u2);
+        Template t2 = new TestTemplate(u2);
 
         AtomicInteger r1c = new AtomicInteger(0);
         AtomicInteger g1c = new AtomicInteger(0);
@@ -83,5 +81,43 @@ public class TtlCacheTest {
         assertEquals(300, g2c.get(), "Unexpected number of runs, did something get deadlocked?");
         assertTrue(r1c.get() > 5 && r1c.get() < 50, () -> "Unexpected number of c1 refreshes: " + r1c.get());
         assertTrue(r2c.get() > 5 && r2c.get() < 50, () -> "Unexpected number of c2 refreshes: " + r2c.get());
+    }
+
+    static class TestTemplate implements Template {
+        final URL url;
+
+        public TestTemplate(URL url) {
+            this.url = url;
+        }
+
+        @Override
+        public Charset getEncoding() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String getName() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public URL getUrl() {
+            return url;
+        }
+
+        @Override
+        public URL getUrl(String resourceName) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Reader reader() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Reader reader(String resourceName) {
+            throw new UnsupportedOperationException();
+        }
     }
 }
