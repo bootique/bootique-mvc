@@ -42,7 +42,7 @@ public class RemoteServerTemplatesIT extends TestWithTemplateServer {
     static BQRuntime app = Bootique.app("-s")
             .autoLoadModules()
             .module(b -> BQCoreModule.extend(b).setProperty("bq.mvc.templateBase", templateServerJetty.getUrl()))
-            .module(b -> JerseyModule.extend(b).addResource(Api.class))
+            .module(b -> JerseyModule.extend(b).addApiResource(Api.class))
             .module(jetty.moduleReplacingConnectors())
             .createRuntime();
 

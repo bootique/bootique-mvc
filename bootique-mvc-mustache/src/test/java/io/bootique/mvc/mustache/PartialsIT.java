@@ -46,7 +46,7 @@ public class PartialsIT {
     public static BQRuntime app = Bootique.app("-s")
             .autoLoadModules()
             .module(b -> BQCoreModule.extend(b).setProperty("bq.mvc.templateBase", "classpath:"))
-            .module(b -> JerseyModule.extend(b).addResource(Api.class))
+            .module(b -> JerseyModule.extend(b).addApiResource(Api.class))
             .module(jetty.moduleReplacingConnectors())
             .createRuntime();
 

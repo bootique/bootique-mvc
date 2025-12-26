@@ -48,7 +48,7 @@ public class MvcFreemarkerModuleIT {
     @BQApp
     static final BQRuntime app = Bootique.app("--config=classpath:MvcFreemarkerModuleIT.yml", "-s")
             .autoLoadModules()
-            .module(binder -> JerseyModule.extend(binder).addResource(Api.class))
+            .module(binder -> JerseyModule.extend(binder).addApiResource(Api.class))
             .module(jetty.moduleReplacingConnectors())
             .createRuntime();
 
