@@ -24,10 +24,10 @@ import io.bootique.BQRuntime;
 import io.bootique.Bootique;
 import io.bootique.jetty.JettyModule;
 import io.bootique.jetty.MappedServlet;
-import io.bootique.jetty.junit5.JettyTester;
-import io.bootique.junit5.BQApp;
-import io.bootique.junit5.BQTest;
-import io.bootique.junit5.BQTestScope;
+import io.bootique.jetty.junit.JettyTester;
+import io.bootique.junit.BQApp;
+import io.bootique.junit.BQTest;
+import io.bootique.junit.BQTestScope;
 
 
 @BQTest
